@@ -26,4 +26,9 @@
     <ProjectReference Include="..\AlibabaClone.Infrastructure\AlibabaClone.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>
