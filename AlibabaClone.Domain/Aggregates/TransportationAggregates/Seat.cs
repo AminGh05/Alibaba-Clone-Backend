@@ -12,8 +12,8 @@ namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 		public bool IsAvailable{ get; set; }
 
 		#region Navigation Properties
-		public virtual Vehicle? Vehicle { get; set; }
-		public virtual ICollection<Ticket>? Tickets { get; set; }
+		public virtual Vehicle Vehicle { get; set; }
+		public virtual ICollection<Ticket> Tickets { get; set; }
 		#endregion
 	}
 }

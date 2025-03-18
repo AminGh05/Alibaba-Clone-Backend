@@ -7,7 +7,7 @@ namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 		public required string Title { get; set; }
 
 		#region Navigation Properties
-		public virtual ICollection<Transportation>? Transportations { get; set; }
+		public virtual ICollection<Transportation> Transportations { get; set; }
 		#endregion
 	}
 }

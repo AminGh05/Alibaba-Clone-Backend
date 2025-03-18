@@ -17,12 +17,12 @@ namespace AlibabaClone.Domain.Aggregates.TransactionAggregates
 		public string? Description { get; set; }
 
 		#region Navigation Properties
-		public virtual Transportation? Transportation { get; set; }
-		public virtual Seat? Seat { get; set; }
-		public virtual Person? Traveler { get; set; }
-		public virtual Account? Buyer { get; set; }
+		public virtual Transportation Transportation { get; set; }
+		public virtual Seat Seat { get; set; }
+		public virtual Person Traveler { get; set; }
+		public virtual Account Buyer { get; set; }
 		public virtual Person? Companion { get; set; }
-		public virtual TicketStatus? TicketStatus { get; set; }
+		public virtual TicketStatus TicketStatus { get; set; }
 		#endregion
 	}
 }

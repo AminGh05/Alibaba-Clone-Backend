@@ -10,7 +10,7 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		public required long PersonId { get; set; }
 
 		#region Navigation Properties
-		public virtual Person? Person { get; set; }
+		public virtual Person Person { get; set; }
 		#endregion
 	}
 }
