@@ -1,0 +1,16 @@
+﻿using AlibabaClone.Domain.Framework.Base;
+
+namespace AlibabaClone.Domain.Aggregates.AccountAggregates
+{
+    class Account : Entity<long>
+    {
+		public required string PhoneNumber { get; set; }
+		public required string Password { get; set; }
+		public required string Email { get; set; }
+		public required long PersonId { get; set; }
+
+		#region Navigation Properties
+		public virtual Person? Person { get; set; }
+		#endregion
+	}
+}
