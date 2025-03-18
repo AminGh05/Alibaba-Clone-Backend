@@ -10,9 +10,9 @@ namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 		public short LocationTypeId { get; set; }
 
 		#region Navigation Properties
-		public virtual City? City { get; set; }
-		public virtual LocationType? LocationType { get; set; }
-		public virtual ICollection<Transportation>? Transportations { get; set; }
+		public virtual City City { get; set; }
+		public virtual LocationType LocationType { get; set; }
+		public virtual ICollection<Transportation> Transportations { get; set; }
 		#endregion
 	}
 }

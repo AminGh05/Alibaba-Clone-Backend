@@ -12,8 +12,8 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		public string? PassportNumber { get; set; }
 
 		#region Navigation Properties
-		public virtual Gender? Gender { get; set; }
-		public virtual ICollection<Account>? Accounts { get; set; }
+		public virtual Gender Gender { get; set; }
+		public virtual ICollection<Account> Accounts { get; set; }
 		#endregion
 	}
 }

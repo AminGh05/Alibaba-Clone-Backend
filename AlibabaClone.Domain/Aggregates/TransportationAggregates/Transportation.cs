@@ -18,11 +18,11 @@ namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 		public decimal? VIPPrice { get; set; }
 
 		#region Navigation Properties
-		public virtual Location? FromLocation { get; set; }
-		public virtual Location? ToLocation { get; set; }
-		public virtual Company? Company { get; set; }
-		public virtual Vehicle? Vehicle { get; set; }
-		public virtual ICollection<Ticket>? Tickets { get; set; }
+		public virtual Location FromLocation { get; set; }
+		public virtual Location ToLocation { get; set; }
+		public virtual Company Company { get; set; }
+		public virtual Vehicle Vehicle { get; set; }
+		public virtual ICollection<Ticket> Tickets { get; set; }
 		#endregion
 	}
 }

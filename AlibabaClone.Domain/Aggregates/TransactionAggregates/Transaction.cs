@@ -11,7 +11,7 @@ namespace AlibabaClone.Domain.Aggregates.TransactionAggregates
 		public DateTime CreatedAt { get; set; }
 
 		#region Navigation Properties
-		public virtual Ticket? Ticket { get; set; }
+		public virtual Ticket Ticket { get; set; }
 		#endregion
 	}
 }
