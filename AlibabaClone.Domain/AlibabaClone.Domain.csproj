@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Aggregates\LocationAggregates\" />
-    <Folder Include="Aggregates\TransportationAggregates\" />
     <Folder Include="Enums\" />
     <Folder Include="Factories\" />
     <Folder Include="Framework\Interfaces\Repositories\" />

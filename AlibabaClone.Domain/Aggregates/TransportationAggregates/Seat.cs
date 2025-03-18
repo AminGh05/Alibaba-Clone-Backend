@@ -1,0 +1,17 @@
+﻿using AlibabaClone.Domain.Framework.Base;
+
+namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
+{
+    class Seat : Entity<long>
+    {
+		public int VehicleId { get; set; }
+		public int Row { get; set; }
+		public int Column { get; set; }
+		public bool IsVIP { get; set; }
+		public bool IsAvailable{ get; set; }
+
+		#region Navigation Properties
+		public virtual Vehicle? Vehicle { get; set; }
+		#endregion
+	}
+}
