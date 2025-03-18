@@ -1,4 +1,5 @@
-﻿using AlibabaClone.Domain.Framework.Base;
+﻿using AlibabaClone.Domain.Aggregates.TransportationAggregates;
+using AlibabaClone.Domain.Framework.Base;
 
 namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 {
@@ -11,6 +12,7 @@ namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 		#region Navigation Properties
 		public virtual City? City { get; set; }
 		public virtual LocationType? LocationType { get; set; }
+		public virtual ICollection<Transportation>? Transportations { get; set; }
 		#endregion
 	}
 }

@@ -11,6 +11,8 @@ namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 
 		#region Navigation Properties
 		public virtual VehicleType? VehicleType { get; set; }
+		public virtual ICollection<Seat>? Seats { get; set; }
+		public virtual ICollection<Transportation>? Transportations { get; set; }
 		#endregion
 	}
 }
