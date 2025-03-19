@@ -11,11 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregates\" />
     <Folder Include="Enums\" />
     <Folder Include="Factories\" />
     <Folder Include="Framework\Interfaces\Repositories\" />
-    <Folder Include="Framework\Base\" />
   </ItemGroup>
 
 </Project>
