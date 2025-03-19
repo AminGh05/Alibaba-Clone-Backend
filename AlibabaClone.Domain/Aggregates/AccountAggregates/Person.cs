@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 {
-    class Person : Entity<long>
+    public class Person : Entity<long>
     {
 		public required string FirstName { get; set; }
 		public required string LastName { get; set; }

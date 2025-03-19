@@ -3,7 +3,7 @@ using AlibabaClone.Domain.Framework.Base;
 
 namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 {
-    class Seat : Entity<long>
+    public class Seat : Entity<long>
     {
 		public int VehicleId { get; set; }
 		public int Row { get; set; }

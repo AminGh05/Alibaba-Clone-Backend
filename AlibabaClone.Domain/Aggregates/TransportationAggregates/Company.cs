@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 {
-    class Company : Entity<int>
+    public class Company : Entity<int>
     {
 		public required string Title { get; set; }
 

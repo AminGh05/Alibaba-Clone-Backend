@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 {
-    class Gender : Entity<short>
+    public class Gender : Entity<short>
     {
 		public char Title { get; set; }
 	}

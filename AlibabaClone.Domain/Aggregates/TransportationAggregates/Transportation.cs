@@ -4,7 +4,7 @@ using AlibabaClone.Domain.Framework.Base;
 
 namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 {
-	class Transportation : Entity<long>
+	public class Transportation : Entity<long>
 	{
 		public int FromLocationId { get; set; }
 		public int ToLocationId { get; set; }

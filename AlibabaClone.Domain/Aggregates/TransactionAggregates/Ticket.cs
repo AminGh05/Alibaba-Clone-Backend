@@ -4,7 +4,7 @@ using AlibabaClone.Domain.Framework.Base;
 
 namespace AlibabaClone.Domain.Aggregates.TransactionAggregates
 {
-    class Ticket : Entity<long>
+    public class Ticket : Entity<long>
     {
 		public long TransportationId { get; set; }
 		public long SeatId { get; set; }
