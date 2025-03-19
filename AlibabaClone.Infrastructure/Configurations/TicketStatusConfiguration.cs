@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AlibabaClone.Infrastructure.Configurations
 {
-	internal class TicketStatusConfiguration : IEntityTypeConfiguration<TicketStatus>
+	public class TicketStatusConfiguration : IEntityTypeConfiguration<TicketStatus>
 	{
 		public void Configure(EntityTypeBuilder<TicketStatus> builder)
 		{

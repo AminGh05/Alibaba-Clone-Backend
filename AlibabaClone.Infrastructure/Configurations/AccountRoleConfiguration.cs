@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AlibabaClone.Infrastructure.Configurations
 {
-	internal class AccountRoleConfiguration : IEntityTypeConfiguration<AccountRole>
+	public class AccountRoleConfiguration : IEntityTypeConfiguration<AccountRole>
 	{
 		public void Configure(EntityTypeBuilder<AccountRole> builder)
 		{

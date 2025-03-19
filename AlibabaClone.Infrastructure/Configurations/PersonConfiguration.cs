@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AlibabaClone.Infrastructure.Configurations
 {
-	internal class PersonConfiguration : IEntityTypeConfiguration<Person>
+	public class PersonConfiguration : IEntityTypeConfiguration<Person>
 	{
 		public void Configure(EntityTypeBuilder<Person> builder)
 		{

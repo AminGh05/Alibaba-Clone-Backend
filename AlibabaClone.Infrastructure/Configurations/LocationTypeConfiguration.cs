@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AlibabaClone.Infrastructure.Configurations
 {
-	internal class LocationTypeConfiguration : IEntityTypeConfiguration<LocationType>
+	public class LocationTypeConfiguration : IEntityTypeConfiguration<LocationType>
 	{
 		public void Configure(EntityTypeBuilder<LocationType> builder)
 		{
