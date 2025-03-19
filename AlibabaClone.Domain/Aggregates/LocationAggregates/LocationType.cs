@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 {
-    class LocationType : Entity<short>
+    public class LocationType : Entity<short>
     {
 		public required string Title { get; set; }
 

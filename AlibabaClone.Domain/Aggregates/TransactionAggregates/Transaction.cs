@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.TransactionAggregates
 {
-    class Transaction : Entity<long>
+    public class Transaction : Entity<long>
     {
 		public decimal BaseAmount { get; set; }
 		public decimal FinalAmount { get; set; }

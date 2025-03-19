@@ -3,7 +3,7 @@ using AlibabaClone.Domain.Framework.Base;
 
 namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 {
-    class Location : Entity<int>
+    public class Location : Entity<int>
     {
 		public required string Title { get; set; }
 		public int CityId { get; set; }

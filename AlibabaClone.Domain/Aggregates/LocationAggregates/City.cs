@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 {
-    class City : Entity<int>
+    public class City : Entity<int>
     {
 		public required string Title { get; set; }
 
