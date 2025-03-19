@@ -53,7 +53,7 @@ namespace AlibabaClone.Infrastructure.Configurations
 				.HasColumnType("decimal(18,2)");
 
 			// vip price
-			builder.Property(t => t.BasePrice)
+			builder.Property(t => t.VIPPrice)
 				.HasColumnType("decimal(18,2)");
 
 			// location foreign-key -> from

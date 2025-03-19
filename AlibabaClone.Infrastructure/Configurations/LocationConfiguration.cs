@@ -23,7 +23,7 @@ namespace AlibabaClone.Infrastructure.Configurations
 				.IsRequired();
 
 			// location-type-id
-			builder.Property(l => l.LocationType)
+			builder.Property(l => l.LocationTypeId)
 				.IsRequired();
 
 			// city foreign-key
