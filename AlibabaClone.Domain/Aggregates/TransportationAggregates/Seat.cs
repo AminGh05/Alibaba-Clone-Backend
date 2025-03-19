@@ -10,6 +10,7 @@ namespace AlibabaClone.Domain.Aggregates.TransportationAggregates
 		public int Column { get; set; }
 		public bool IsVIP { get; set; }
 		public bool IsAvailable{ get; set; }
+		public string? Description { get; set; }
 
 		#region Navigation Properties
 		public virtual Vehicle Vehicle { get; set; }
