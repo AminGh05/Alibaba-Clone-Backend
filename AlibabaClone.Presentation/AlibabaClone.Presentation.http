@@ -1,6 +1,0 @@
-@AlibabaClone.Presentation_HostAddress = http://localhost:5056
-
-GET {{AlibabaClone.Presentation_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
