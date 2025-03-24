@@ -1,12 +1,12 @@
-﻿using AlibabaClone.Domain.Aggregates.TransportationAggregates;
+﻿using AlibabaClone.Domain.Aggregates.LocationAggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AlibabaClone.Infrastructure.Configurations
+namespace AlibabaClone.Infrastructure.Configurations.LocationConfigurations
 {
-	public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+	public class CityConfiguration : IEntityTypeConfiguration<City>
 	{
-		public void Configure(EntityTypeBuilder<Company> builder)
+		public void Configure(EntityTypeBuilder<City> builder)
 		{
 			builder.HasKey(c => c.Id);
 			// auto-generate id
@@ -16,10 +16,9 @@ namespace AlibabaClone.Infrastructure.Configurations
 			// title
 			builder.Property(c => c.Title)
 				.IsRequired()
-				.IsUnicode(false)
-				.HasMaxLength(100);
+				.HasMaxLength(80);
 
-			// index company titles as unique
+			// index city titles as unique
 			builder.HasIndex(c => c.Title)
 				.IsUnique();
 		}

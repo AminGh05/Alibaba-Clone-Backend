@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AlibabaClone.Infrastructure.Configurations
+namespace AlibabaClone.Infrastructure.Configurations.TransportationConfigurations
 {
 	public class VehicleTypeConfiguration : IEntityTypeConfiguration<VehicleType>
 	{

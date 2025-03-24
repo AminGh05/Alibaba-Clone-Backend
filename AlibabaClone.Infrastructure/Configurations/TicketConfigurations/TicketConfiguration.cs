@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AlibabaClone.Infrastructure.Configurations
+namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 {
 	public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
 	{
