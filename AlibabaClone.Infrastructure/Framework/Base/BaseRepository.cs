@@ -16,27 +16,27 @@ namespace AlibabaClone.Infrastructure.Framework.Base
 			DbSet = context.Set<TEntity>();
 		}
 
-		public async Task InsertAsync(TEntity entity)
+		public virtual async Task InsertAsync(TEntity entity)
 		{
 			await DbSet.AddAsync(entity);
 		}
 		
-		public async Task<List<TEntity>> GetAllAsync()
+		public virtual async Task<List<TEntity>> GetAllAsync()
 		{
 			return await DbSet.ToListAsync();
 		}
 
-		public async Task<TEntity?> GetByIdAsync(TPrimaryKey id)
+		public virtual async Task<TEntity?> GetByIdAsync(TPrimaryKey id)
 		{
 			return await DbSet.FindAsync(id);
 		}
 
-		public void Update(TEntity entity)
+		public virtual void Update(TEntity entity)
 		{
 			DbSet.Update(entity);
 		}
 
-		public void Delete(TEntity entity)
+		public virtual void Delete(TEntity entity)
 		{
 			if (DbSet.Entry(entity).State == EntityState.Detached)
 			{
@@ -46,7 +46,7 @@ namespace AlibabaClone.Infrastructure.Framework.Base
 			DbSet.Remove(entity);
 		}
 
-		public async Task DeleteAsync(TPrimaryKey id)
+		public virtual async Task DeleteAsync(TPrimaryKey id)
 		{
 			var entity = await DbSet.FindAsync(id);
 
