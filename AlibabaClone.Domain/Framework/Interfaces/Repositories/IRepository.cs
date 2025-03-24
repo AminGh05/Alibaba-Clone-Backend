@@ -4,9 +4,9 @@
 	{
 		Task InsertAsync(TEntity entity);
 		Task<List<TEntity>> GetAllAsync();
-		Task<TEntity> GetByIdAsync(TPrimarayKey id);
-		void UpdateAsync(TEntity entity);
-		Task DeleteAsync(TEntity entity);
+		Task<TEntity?> GetByIdAsync(TPrimarayKey id);
+		void Update(TEntity entity);
+		void Delete(TEntity entity);
 		Task DeleteAsync(TPrimarayKey id);
 	}
 }
