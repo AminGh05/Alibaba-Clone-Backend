@@ -4,7 +4,7 @@ using AlibabaClone.Infrastructure.Framework.Base;
 
 namespace AlibabaClone.Infrastructure.Services.TransportationRepositories
 {
-	internal class VehicleRepository : BaseRepository<AlibabaDbContext, Vehicle, int>, IVehicleRepository
+	public class VehicleRepository : BaseRepository<AlibabaDbContext, Vehicle, int>, IVehicleRepository
 	{
 		public VehicleRepository(AlibabaDbContext context) : base(context)
 		{
