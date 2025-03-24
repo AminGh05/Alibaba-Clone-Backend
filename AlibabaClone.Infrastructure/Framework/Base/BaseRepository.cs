@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlibabaClone.Infrastructure.Framework.Base
 {
-	internal class BaseRepository<KDbContext, TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
+	public class BaseRepository<KDbContext, TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
 		where TEntity : class
 		where KDbContext : DbContext
 	{
