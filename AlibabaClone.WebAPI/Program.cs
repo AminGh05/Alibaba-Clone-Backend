@@ -1,8 +1,10 @@
+using AlibabaClone.Domain.Framework.Interfaces;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.LocationRepositories;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.TransactionRepositories;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.TransportationRepositories;
 using AlibabaClone.Infrastructure;
+using AlibabaClone.Infrastructure.Framework.Base;
 using AlibabaClone.Infrastructure.Services.AccountRepositories;
 using AlibabaClone.Infrastructure.Services.LocationRepositories;
 using AlibabaClone.Infrastructure.Services.TransactionRepositories;
@@ -37,6 +39,9 @@ builder.Services.AddScoped<ITransportationRepository, TransportationRepository>(
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IVehicleTypeRepository, VehicleTypeRepository>();
 #endregion
+
+// register unit-of-work
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
