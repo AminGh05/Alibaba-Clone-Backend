@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AlibabaDbContext>(options => options.UseSqlServer(
 
 #region Repositories
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
