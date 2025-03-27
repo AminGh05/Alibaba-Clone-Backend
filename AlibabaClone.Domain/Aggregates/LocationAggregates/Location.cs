@@ -12,7 +12,8 @@ namespace AlibabaClone.Domain.Aggregates.LocationAggregates
 		#region Navigation Properties
 		public virtual City City { get; set; }
 		public virtual LocationType LocationType { get; set; }
-		public virtual ICollection<Transportation> Transportations { get; set; }
+		public virtual ICollection<Transportation> TransportationsTo { get; set; }
+		public virtual ICollection<Transportation> TransportationsFrom { get; set; }
 		#endregion
 	}
 }

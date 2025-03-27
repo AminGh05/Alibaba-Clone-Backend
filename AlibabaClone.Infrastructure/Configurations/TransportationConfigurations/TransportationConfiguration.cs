@@ -58,13 +58,13 @@ namespace AlibabaClone.Infrastructure.Configurations.TransportationConfiguration
 
 			// location foreign-key -> from
 			builder.HasOne(t => t.FromLocation)
-				.WithMany()
+				.WithMany(l => l.TransportationsFrom)
 				.HasForeignKey(t => t.FromLocationId)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			// location foreign-key -> to
 			builder.HasOne(t => t.ToLocation)
-				.WithMany()
+				.WithMany(l => l.TransportationsTo)
 				.HasForeignKey(t => t.ToLocationId)
 				.OnDelete(DeleteBehavior.Restrict);
 
