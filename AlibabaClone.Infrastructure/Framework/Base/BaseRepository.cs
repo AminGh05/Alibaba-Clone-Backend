@@ -1,5 +1,6 @@
 ﻿using AlibabaClone.Domain.Framework.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AlibabaClone.Infrastructure.Framework.Base
 {
@@ -21,9 +22,14 @@ namespace AlibabaClone.Infrastructure.Framework.Base
 			await DbSet.AddAsync(entity);
 		}
 		
-		public virtual async Task<List<TEntity>> GetAllAsync()
+		public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
 		{
 			return await DbSet.ToListAsync();
+		}
+
+		public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+		{
+			return await DbSet.Where(predicate).ToListAsync();
 		}
 
 		public virtual async Task<TEntity?> GetByIdAsync(TPrimaryKey id)
@@ -44,16 +50,6 @@ namespace AlibabaClone.Infrastructure.Framework.Base
 			}
 
 			DbSet.Remove(entity);
-		}
-
-		public virtual async Task DeleteAsync(TPrimaryKey id)
-		{
-			var entity = await DbSet.FindAsync(id);
-
-			if (entity != null)
-			{
-				DbSet.Remove(entity);
-			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using AlibabaClone.Domain.Aggregates.AccountAggregates;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 {
@@ -20,9 +21,14 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 			await DbSet.AddAsync(entity);
 		}
 
-		public async Task<List<AccountRole>> GetAllAsync()
+		public async Task<IEnumerable<AccountRole>> GetAllAsync()
 		{
 			return await DbSet.ToListAsync();
+		}
+
+		public async Task<IEnumerable<AccountRole>> FindAsync(Expression<Func<AccountRole, bool>> predicate)
+		{
+			return await DbSet.Where(predicate).ToListAsync();
 		}
 
 		public async Task<AccountRole?> GetByIdAsync(short roleId, long accountId)
@@ -42,15 +48,6 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 				DbSet.Attach(entity);
 			}
 			DbSet.Remove(entity);
-		}
-
-		public async Task DeleteAsync(short roleId, long accountId)
-		{
-			var entity = await GetByIdAsync(roleId, accountId);
-			if (entity != null)
-			{
-				DbSet.Remove(entity);
-			}
 		}
 	}
 }
