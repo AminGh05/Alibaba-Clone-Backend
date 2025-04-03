@@ -18,7 +18,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="DTOs\" />
-    <Folder Include="Mappers\" />
+    <Folder Include="Common\" />
     <Folder Include="Validators\" />
     <Folder Include="Services\" />
   </ItemGroup>
