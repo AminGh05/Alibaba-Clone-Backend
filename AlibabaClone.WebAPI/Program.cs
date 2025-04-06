@@ -48,6 +48,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 #region Register Services
 builder.Services.AddScoped<ITransportationService, TransportationService>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
 #endregion
 
 var app = builder.Build();
