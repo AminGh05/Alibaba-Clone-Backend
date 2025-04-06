@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
-    <Folder Include="Factories\" />
   </ItemGroup>
 
 </Project>
