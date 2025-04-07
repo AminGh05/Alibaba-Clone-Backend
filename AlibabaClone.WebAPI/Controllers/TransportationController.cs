@@ -17,7 +17,7 @@ namespace AlibabaClone.WebAPI.Controllers
 		}
 
 		[HttpGet("search")]
-		public async Task<IActionResult> SearchTransportations([FromBody] TransportationSearchRequestDto searchRequest)
+		public async Task<IActionResult> SearchTransportations([FromQuery] TransportationSearchRequestDto searchRequest)
 		{
 			if (searchRequest == null)
 			{
@@ -31,15 +31,12 @@ namespace AlibabaClone.WebAPI.Controllers
 			}
 
 			// any unsuccessful status
-			switch (result.Status)
+			return result.Status switch
 			{
-				case ResultStatus.NotFound: 
-					return NotFound(result.ErrorMessage);
-				case ResultStatus.ValidationError: 
-					return BadRequest(result.ErrorMessage);
-				default:
-					return StatusCode(500, result.ErrorMessage);
-			}
+				ResultStatus.NotFound => NotFound(result.ErrorMessage),
+				ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+				_ => StatusCode(500, result.ErrorMessage),
+			};
 		}
 	}
 }

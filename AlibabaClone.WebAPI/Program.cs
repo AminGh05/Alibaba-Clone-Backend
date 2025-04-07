@@ -1,3 +1,4 @@
+using AlibabaClone.Application.Common.Profiles;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Services;
 using AlibabaClone.Domain.Framework.Interfaces;
@@ -48,8 +49,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 #region Register Services
 builder.Services.AddScoped<ITransportationService, TransportationService>();
-builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityService, CityService>();
 #endregion
+
+// register auto-mapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

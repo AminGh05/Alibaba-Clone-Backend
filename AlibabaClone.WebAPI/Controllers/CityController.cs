@@ -25,15 +25,12 @@ namespace AlibabaClone.WebAPI.Controllers
 			}
 
 			// any unsuccessful status
-			switch (result.Status)
+			return result.Status switch
 			{
-				case ResultStatus.NotFound:
-					return NotFound(result.ErrorMessage);
-				case ResultStatus.ValidationError:
-					return BadRequest(result.ErrorMessage);
-				default:
-					return StatusCode(500, result.ErrorMessage);
-			}
+				ResultStatus.NotFound => NotFound(result.ErrorMessage),
+				ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+				_ => StatusCode(500, result.ErrorMessage),
+			};
 		}
 	}
 }
