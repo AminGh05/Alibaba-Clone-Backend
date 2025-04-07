@@ -5,7 +5,7 @@
 		public ResultStatus Status { get; set; }
 		public string? ErrorMessage { get; set; }
 		public T? Data { get; set; }
-		public bool IsSuccess { get; set; }
+		public bool IsSuccess => Status == ResultStatus.Success;
 
 		public static Result<T> Success(T data)
 		{
