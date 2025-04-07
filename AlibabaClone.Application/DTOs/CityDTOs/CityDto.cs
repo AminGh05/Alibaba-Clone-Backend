@@ -1,4 +1,8 @@
 ﻿namespace AlibabaClone.Application.DTOs.CityDTOs
 {
-	public record CityDto(int Id, string Title);
+	public class CityDto
+	{
+		public required int Id { get; init; }
+		public required string Title { get; init; }
+	}
 }
