@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlibabaClone.WebAPI.Controllers
 {
+	[ApiController]
+	[Route("api/[controller]")]
 	public class CityController : ControllerBase
 	{
 		private readonly ICityService _cityService;
