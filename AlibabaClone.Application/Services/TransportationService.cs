@@ -23,6 +23,7 @@ namespace AlibabaClone.Application.Services
 		public async Task<Result<IEnumerable<TransportationSearchResultDto>>> SearchTransportationsAsync(TransportationSearchRequestDto requestDto)
 		{
 			var result = await _transportationRepository.SearchTransportationsAsync(
+				vehicleTypeId: requestDto.VehicleTypeId,
 				fromCityId: requestDto.FromCityId,
 				toCityId: requestDto.ToCityId,
 				startDateTime: requestDto.StartDate,

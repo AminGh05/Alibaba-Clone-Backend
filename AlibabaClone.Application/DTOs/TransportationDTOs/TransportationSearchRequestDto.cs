@@ -2,6 +2,7 @@
 {
 	public record TransportationSearchRequestDto
 	{
+		public short VehicleTypeId { get; init; }
 		public int? FromCityId { get; init; }
 		public int? ToCityId { get; init; }
 		public DateTime? StartDate { get; init; }

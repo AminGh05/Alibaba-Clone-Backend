@@ -12,14 +12,16 @@ namespace AlibabaClone.Infrastructure.Services.TransportationRepositories
 
 		}
 
-		public async Task<IEnumerable<Transportation>> SearchTransportationsAsync(int? fromCityId, int? toCityId, DateTime? startDateTime, DateTime? endDateTime)
+		public async Task<IEnumerable<Transportation>> SearchTransportationsAsync(short vehicleTypeId, int? fromCityId, int? toCityId, DateTime? startDateTime, DateTime? endDateTime)
 		{
 			var query = DbContext.Transportations
+				.Include(t => t.Vehicle)
 				.Include(t => t.FromLocation).ThenInclude(fl => fl.City)
 				.Include(t => t.ToLocation).ThenInclude(tl => tl.City)
 				.Include(t => t.Company)
 				.AsQueryable();
 
+			query = query.Where(t => t.Vehicle.VehicleTypeId == vehicleTypeId);
 			query = query.Where(t => fromCityId == null || t.FromLocation.CityId == fromCityId.Value);
 			query = query.Where(t => toCityId == null || t.ToLocation.CityId == toCityId.Value);
 			query = query.Where(t => startDateTime == null || t.StartDateTime.Date == startDateTime.Value.Date);

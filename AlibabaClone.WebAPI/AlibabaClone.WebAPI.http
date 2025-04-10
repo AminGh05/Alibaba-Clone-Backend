@@ -1,6 +1,6 @@
 @AlibabaClone.WebAPI_HostAddress = http://localhost:5246
 
-GET {{AlibabaClone.WebAPI_HostAddress}}/weatherforecast/
+GET {{AlibabaClone.WebAPI_HostAddress}}/alibaba/
 Accept: application/json
 
 ###

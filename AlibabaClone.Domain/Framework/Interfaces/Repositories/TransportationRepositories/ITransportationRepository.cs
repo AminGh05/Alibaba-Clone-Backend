@@ -4,7 +4,7 @@ namespace AlibabaClone.Domain.Framework.Interfaces.Repositories.TransportationRe
 {
 	public interface ITransportationRepository : IRepository<Transportation, long>
 	{
-		public Task<IEnumerable<Transportation>> SearchTransportationsAsync(int? fromCityId, int? toCityId,
+		public Task<IEnumerable<Transportation>> SearchTransportationsAsync(short vehicleTypeId, int? fromCityId, int? toCityId,
 		DateTime? startDateTime, DateTime? endDateTime);
 	}
 }
