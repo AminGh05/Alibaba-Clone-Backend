@@ -55,6 +55,18 @@ builder.Services.AddScoped<ICityService, CityService>();
 // register auto-mapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+#region Cors
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("Frontend", policy =>
+	{
+		policy.WithOrigins("http://localhost:5173/")
+		.AllowAnyHeader()
+		.AllowAnyMethod();
+	});
+});
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -69,5 +81,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("Frontend");
 
 app.Run();
