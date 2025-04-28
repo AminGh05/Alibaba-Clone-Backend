@@ -21,7 +21,7 @@ namespace AlibabaClone.WebAPI.Controllers
 			var result = await _cityService.GetCitiesAsync();
 			if (result.IsSuccess)
 			{
-				return Ok(result);
+				return Ok(result.Data);
 			}
 
 			// any unsuccessful status

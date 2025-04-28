@@ -16,8 +16,8 @@ namespace AlibabaClone.WebAPI.Controllers
 			_transportationService = transportationService;
 		}
 
-		[HttpGet("search")]
-		public async Task<IActionResult> SearchTransportations([FromQuery] TransportationSearchRequestDto searchRequest)
+		[HttpPost("search")]
+		public async Task<IActionResult> SearchTransportations([FromBody] TransportationSearchRequestDto searchRequest)
 		{
 			if (searchRequest == null)
 			{
@@ -27,7 +27,7 @@ namespace AlibabaClone.WebAPI.Controllers
 			var result = await _transportationService.SearchTransportationsAsync(searchRequest);
 			if (result.IsSuccess)
 			{
-				return Ok(result);
+				return Ok(result.Data);
 			}
 
 			// any unsuccessful status
