@@ -1,6 +1,7 @@
 ﻿using AlibabaClone.Domain.Aggregates.AccountAggregates;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
 using AlibabaClone.Infrastructure.Framework.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 {
@@ -10,5 +11,11 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 		{
 
 		}
-	}
+
+        public async Task<Account> GetByPhoneNumberAsync(string phoneNumber)
+        {
+			var user = await DbContext.Accounts.Include(a => a.AccountRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+			return user;
+        }
+    }
 }
