@@ -13,6 +13,7 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		#region Navigation Properties
 		public virtual Person Person { get; set; }
 		public virtual ICollection<Ticket> BoughtTickets { get; set; }
-		#endregion
-	}
+        public virtual ICollection<AccountRole> AccountRoles { get; set; }
+        #endregion
+    }
 }
