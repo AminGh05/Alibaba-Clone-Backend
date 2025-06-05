@@ -12,7 +12,10 @@ using AlibabaClone.Infrastructure.Services.AccountRepositories;
 using AlibabaClone.Infrastructure.Services.LocationRepositories;
 using AlibabaClone.Infrastructure.Services.TransactionRepositories;
 using AlibabaClone.Infrastructure.Services.TransportationRepositories;
+using AlibabaClone.WebAPI.Authentication;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +59,32 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 // register auto-mapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+#region Authentication
+builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+{
+	options.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidIssuer = jwtSettings.Issuer,
+
+		ValidateAudience = true,
+		ValidAudience = jwtSettings.Audience,
+
+		ValidateIssuerSigningKey = true,
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+
+		ValidateLifetime = true,
+		ClockSkew = TimeSpan.Zero
+	};
+});
+
+builder.Services.AddAuthorization();
+#endregion
+
 #region Cors
 builder.Services.AddCors(options =>
 {
@@ -79,6 +108,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
