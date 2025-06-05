@@ -64,23 +64,27 @@ builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
-builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+if (jwtSettings != null)
 {
-	options.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuer = true,
-		ValidIssuer = jwtSettings.Issuer,
+    builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings.Issuer,
 
-		ValidateAudience = true,
-		ValidAudience = jwtSettings.Audience,
+            ValidateAudience = true,
+            ValidAudience = jwtSettings.Audience,
 
-		ValidateIssuerSigningKey = true,
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
 
-		ValidateLifetime = true,
-		ClockSkew = TimeSpan.Zero
-	};
-});
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+}
 
 builder.Services.AddAuthorization();
 #endregion
