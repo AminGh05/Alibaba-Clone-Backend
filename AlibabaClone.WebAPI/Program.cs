@@ -50,6 +50,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 #region Register Services
 builder.Services.AddScoped<ITransportationService, TransportationService>();
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 #endregion
 
 // register auto-mapper
