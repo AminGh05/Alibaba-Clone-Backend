@@ -16,12 +16,13 @@
 			};
 		}
 
-		public static Result<T> Error(T data)
+		public static Result<T> Error(T data, string errorMessage)
 		{
 			return new Result<T>
 			{
 				Status = ResultStatus.Error,
-				Data = data
+				Data = data,
+				ErrorMessage = errorMessage
 			};
 		}
 
