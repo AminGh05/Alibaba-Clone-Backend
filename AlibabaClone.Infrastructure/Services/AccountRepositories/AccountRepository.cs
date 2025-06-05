@@ -14,7 +14,7 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 
         public async Task<Account> GetByPhoneNumberAsync(string phoneNumber)
         {
-			var user = await DbContext.Accounts.Include(a => a.AccountRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+			var user = await DbSet.Include(a => a.AccountRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
 			return user;
         }
     }

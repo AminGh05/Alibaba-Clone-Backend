@@ -34,7 +34,7 @@ namespace AlibabaClone.Infrastructure.Configurations.AccountConfigurations
 
 			// person-id
 			builder.Property(a => a.PersonId)
-				.IsRequired();
+				.IsRequired(false);
 			
 			// person foreign-key
 			builder.HasOne(a => a.Person)

@@ -4,6 +4,7 @@ using AlibabaClone.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlibabaClone.Infrastructure.Migrations
 {
     [DbContext(typeof(AlibabaDbContext))]
-    partial class AlibabaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605153308_FixPasswordMig")]
+    partial class FixPasswordMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

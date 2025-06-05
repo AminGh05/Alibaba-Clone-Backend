@@ -4,6 +4,7 @@ using AlibabaClone.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlibabaClone.Infrastructure.Migrations
 {
     [DbContext(typeof(AlibabaDbContext))]
-    partial class AlibabaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605152310_PersonIdNullableMig")]
+    partial class PersonIdNullableMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +49,7 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .HasColumnType("char(64)")
                         .IsFixedLength();
 
-                    b.Property<long?>("PersonId")
+                    b.Property<long>("PersonId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
@@ -516,7 +519,8 @@ namespace AlibabaClone.Infrastructure.Migrations
                     b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Person", "Person")
                         .WithMany("Accounts")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });

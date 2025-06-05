@@ -40,7 +40,7 @@ namespace AlibabaClone.Application.Services
             var account = await _accountRepository.GetByPhoneNumberAsync(request.PhoneNumber);
             var accountDto = _mapper.Map<AccountDto>(account);
             // check phone and password to find account
-            if (accountDto == null || PasswordHasher.VerifyPassword(request.Password, accountDto.Password))
+            if (accountDto == null || !PasswordHasher.VerifyPassword(request.Password, accountDto.Password))
             {
                 return Result<AuthResponseDto>.Error(null, "Invalid phone number or password");
             }
@@ -79,7 +79,7 @@ namespace AlibabaClone.Application.Services
             await _unitOfWork.CompleteAsync();
 
             // add account role by account
-            var account = _accountRepository.GetByPhoneNumberAsync(accountDto.PhoneNumber);
+            var account = await _accountRepository.GetByPhoneNumberAsync(request.PhoneNumber);
             var accountRole = new AccountRole
             {
                 AccountId = account.Id,

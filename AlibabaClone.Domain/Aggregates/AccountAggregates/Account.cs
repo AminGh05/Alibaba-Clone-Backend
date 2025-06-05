@@ -8,7 +8,7 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		public required string PhoneNumber { get; set; }
 		public required string Password { get; set; }
 		public required string Email { get; set; }
-		public required long PersonId { get; set; }
+		public long? PersonId { get; set; }
 
 		#region Navigation Properties
 		public virtual Person Person { get; set; }
