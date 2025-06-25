@@ -35,11 +35,15 @@ namespace AlibabaClone.Infrastructure.Configurations.AccountConfigurations
 			// person-id
 			builder.Property(a => a.PersonId)
 				.IsRequired(false);
-			
-			// person foreign-key
-			builder.HasOne(a => a.Person)
-				.WithMany(p => p.Accounts)
-				.HasForeignKey(a => a.PersonId)
+
+			// balance
+			builder.Property(a => a.Balance)
+				.HasColumnType("decimal(18,2)");
+
+            // person foreign-key
+            builder.HasOne(a => a.Person)
+				.WithOne()
+				.HasForeignKey<Account>(a => a.PersonId)
 				.OnDelete(DeleteBehavior.Restrict);
 		}
 	}

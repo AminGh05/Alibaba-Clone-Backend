@@ -49,6 +49,12 @@ namespace AlibabaClone.Infrastructure.Configurations.AccountConfigurations
 				.WithMany()
 				.HasForeignKey(p => p.GenderId)
 				.OnDelete(DeleteBehavior.Restrict);
-		}
-	}
+
+            // creator foreign-key
+			builder.HasOne(p => p.Creator)
+				.WithMany(a => a.PeopleCreated)
+				.HasForeignKey(a => a.CreatorId)
+				.OnDelete(DeleteBehavior.Restrict);
+        }
+    }
 }
