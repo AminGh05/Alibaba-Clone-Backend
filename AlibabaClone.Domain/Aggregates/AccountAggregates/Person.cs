@@ -11,10 +11,11 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		public DateTime BirthDate { get; set; }
 		public short GenderId { get; set; }
 		public string? PassportNumber { get; set; }
+        public long CreatorId { get; set; }
 
-		#region Navigation Properties
-		public virtual Gender Gender { get; set; }
-		public virtual ICollection<Account> Accounts { get; set; }
+        #region Navigation Properties
+        public virtual Gender Gender { get; set; }
+		public virtual Account Creator { get; set; }
 		public virtual ICollection<Ticket> TraveledTickets { get; set; }
 		#endregion
 	}
