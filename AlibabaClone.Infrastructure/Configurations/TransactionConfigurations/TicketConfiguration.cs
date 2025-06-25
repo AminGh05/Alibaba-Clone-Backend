@@ -13,8 +13,8 @@ namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 			builder.Property(t => t.Id)
 				.ValueGeneratedOnAdd();
 
-			// transportation-id
-			builder.Property(t => t.TransportationId)
+			// ticket-order-id
+			builder.Property(t => t.TicketOrderId)
 				.IsRequired();
 
 			// seat-id
@@ -25,16 +25,20 @@ namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 			builder.Property(t => t.TravelerId)
 				.IsRequired();
 
-			// buyer-id
-			builder.Property(t => t.BuyerId)
-				.IsRequired();
-
 			// created date-time
 			builder.Property(t => t.CreatedAt)
 				.IsRequired();
 
-			// ticket-status-id
-			builder.Property(t => t.TicketStatusId)
+            // canceled date-time
+			builder.Property(t => t.CanceledAt)
+				.IsRequired(false);
+
+            // companion-id
+			builder.Property(t => t.CompanionId)
+				.IsRequired(false);
+
+            // ticket-status-id
+            builder.Property(t => t.TicketStatusId)
 				.IsRequired();
 
 			// serial-number
@@ -42,15 +46,17 @@ namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 				.IsRequired()
 				.IsUnicode(false)
 				.HasMaxLength(50);
+			builder.HasIndex(t => t.SerialNumber)
+				.IsUnique();
 
-			// description
-			builder.Property(t => t.Description)
-				.HasMaxLength(1000);
+            // description
+            builder.Property(t => t.Description)
+				.HasMaxLength(500);
 
-			// transportation foreign-key
-			builder.HasOne(t => t.Transportation)
-				.WithMany(tr => tr.Tickets)
-				.HasForeignKey(t => t.TransportationId)
+			// ticket-order foreign-key
+			builder.HasOne(t => t.TicketOrder)
+				.WithMany(to => to.Tickets)
+				.HasForeignKey(t => t.TicketOrderId)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			// seat foreign-key
@@ -63,12 +69,6 @@ namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 			builder.HasOne(t => t.Traveler)
 				.WithMany(tr => tr.TraveledTickets)
 				.HasForeignKey(t => t.TravelerId)
-				.OnDelete(DeleteBehavior.Restrict);
-
-			// buyer foreign-key
-			builder.HasOne(t => t.Buyer)
-				.WithMany(b => b.BoughtTickets)
-				.HasForeignKey(t => t.BuyerId)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			// companion foreign-key
