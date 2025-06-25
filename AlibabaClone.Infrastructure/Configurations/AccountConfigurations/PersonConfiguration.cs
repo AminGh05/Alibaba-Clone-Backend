@@ -28,8 +28,6 @@ namespace AlibabaClone.Infrastructure.Configurations.AccountConfigurations
 				.IsRequired()
 				.HasMaxLength(20)
 				.IsUnicode(false);
-			builder.HasIndex(p => p.IdNumber)
-				.IsUnique();
 
 			// birthdate
 			builder.Property(p => p.BirthDate)
