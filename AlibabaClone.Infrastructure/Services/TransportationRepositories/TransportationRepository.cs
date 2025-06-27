@@ -14,7 +14,7 @@ namespace AlibabaClone.Infrastructure.Services.TransportationRepositories
 
 		public async Task<IEnumerable<Transportation>> SearchTransportationsAsync(short vehicleTypeId, int? fromCityId, int? toCityId, DateTime? startDateTime, DateTime? endDateTime)
 		{
-			var query = DbContext.Transportations
+			var query = DbSet
 				.Include(t => t.Vehicle)
 				.Include(t => t.FromLocation).ThenInclude(fl => fl.City)
 				.Include(t => t.ToLocation).ThenInclude(tl => tl.City)
