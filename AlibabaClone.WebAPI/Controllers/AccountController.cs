@@ -1,0 +1,46 @@
+﻿using AlibabaClone.Application.Interfaces;
+using AlibabaClone.Application.Result;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AlibabaClone.WebAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AccountController : ControllerBase
+    {
+        private readonly IUserContext _userContext;
+        private readonly IAccountService _accountService;
+
+        public AccountController(IUserContext userContext, IAccountService accountService)
+        {
+            _userContext = userContext;
+            _accountService = accountService;
+        }
+
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            // get account-id from token
+            long userId = _userContext.GetUserId();
+            // check for user-id to be valid
+            if (userId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _accountService.GetProfileAsync(userId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+
+            return result.Status switch
+            {
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
+    }
+}
