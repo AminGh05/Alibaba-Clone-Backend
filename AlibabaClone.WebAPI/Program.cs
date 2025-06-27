@@ -63,6 +63,10 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
+// register user context
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContext, UserContext>();
+
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
 if (jwtSettings != null)
 {
