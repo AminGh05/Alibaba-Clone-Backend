@@ -11,6 +11,7 @@ namespace AlibabaClone.Application.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public async Task<Result<ProfileDto>> GetProfileAsync(long accountId)
         {
@@ -21,6 +22,35 @@ namespace AlibabaClone.Application.Services
             }
 
             return Result<ProfileDto>.Success(_mapper.Map<ProfileDto>(result));
+        }
+
+        public async Task<Result<long>> UpdateEmailAsync(long accountId, string email)
+        {
+            // find account by its id
+            var account = await _accountRepository.GetByIdAsync(accountId);
+            if (account  == null)
+            {
+                throw new Exception("Account not found");
+            }
+            // find account by its email to compare with the new email
+            var existingAccount = await _accountRepository.GetByEmailAsync(email);
+            if (existingAccount != null)
+            {
+                if (existingAccount.Id != accountId)
+                {
+                    return Result<long>.Error(account.Id, "This email is already in use");
+                }
+                else
+                {
+                    return Result<long>.Success(accountId);
+                }
+            }
+
+            // update the email
+            account.Email = email;
+            _accountRepository.Update(account);
+            await _unitOfWork.CompleteAsync();
+            return Result<long>.Success(account.Id);
         }
     }
 }

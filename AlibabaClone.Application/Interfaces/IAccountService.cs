@@ -6,5 +6,6 @@ namespace AlibabaClone.Application.Interfaces
     public interface IAccountService
     {
         Task<Result<ProfileDto>> GetProfileAsync(long accountId);
+        Task<Result<long>> UpdateEmailAsync(long accountId, string email);
     }
 }

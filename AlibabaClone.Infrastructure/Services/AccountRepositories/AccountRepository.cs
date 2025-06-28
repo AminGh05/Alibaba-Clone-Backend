@@ -7,10 +7,10 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
 {
 	public class AccountRepository : BaseRepository<AlibabaDbContext, Account, long>, IAccountRepository
 	{
-		public AccountRepository(AlibabaDbContext context) : base(context)
-		{
+        public AccountRepository(AlibabaDbContext context) : base(context)
+        {
 
-		}
+        }
 
         public async Task<Account> GetByPhoneNumberAsync(string phoneNumber)
         {
@@ -26,6 +26,12 @@ namespace AlibabaClone.Infrastructure.Services.AccountRepositories
                 .FirstOrDefaultAsync(a => a.Id == accountId);
 
             return profile;
+        }
+
+        public async Task<Account> GetByEmailAsync(string email)
+        {
+            var account = await DbSet.FirstOrDefaultAsync(x => x.Email == email);
+            return account;
         }
     }
 }
