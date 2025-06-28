@@ -1,5 +1,6 @@
 ﻿using AlibabaClone.Application.Common.Utils;
 using AlibabaClone.Application.DTOs.AccountDTOs;
+using AlibabaClone.Application.DTOs.AuthDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Aggregates.AccountAggregates;

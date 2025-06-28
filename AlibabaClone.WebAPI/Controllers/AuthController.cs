@@ -1,4 +1,4 @@
-﻿using AlibabaClone.Application.DTOs.AccountDTOs;
+﻿using AlibabaClone.Application.DTOs.AuthDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.WebAPI.Authentication;
 using Microsoft.AspNetCore.Mvc;

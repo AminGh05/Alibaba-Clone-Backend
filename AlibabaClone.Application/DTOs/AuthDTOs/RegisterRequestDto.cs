@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AlibabaClone.Application.DTOs.AccountDTOs
+namespace AlibabaClone.Application.DTOs.AuthDTOs
 {
     public class RegisterRequestDto
     {

@@ -1,4 +1,4 @@
-﻿namespace AlibabaClone.Application.DTOs.AccountDTOs
+﻿namespace AlibabaClone.Application.DTOs.AuthDTOs
 {
     public class LoginRequestDto
     {

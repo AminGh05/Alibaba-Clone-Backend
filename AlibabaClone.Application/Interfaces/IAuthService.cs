@@ -1,4 +1,4 @@
-﻿using AlibabaClone.Application.DTOs.AccountDTOs;
+﻿using AlibabaClone.Application.DTOs.AuthDTOs;
 using AlibabaClone.Application.Result;
 
 namespace AlibabaClone.Application.Interfaces
