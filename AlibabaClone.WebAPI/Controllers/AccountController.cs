@@ -56,5 +56,18 @@ namespace AlibabaClone.WebAPI.Controllers
             await _accountService.UpdateEmailAsync(accountId, dto.NewEmail);
             return NoContent();
         }
+
+        [HttpPut("password")]
+        public async Task<IActionResult> EditPassword([FromBody] EditPasswordDto dto)
+        {
+            var accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            await _accountService.UpdatePasswordAsync(accountId, dto.OldPassword, dto.NewPassword);
+            return NoContent();
+        }
     }
 }
