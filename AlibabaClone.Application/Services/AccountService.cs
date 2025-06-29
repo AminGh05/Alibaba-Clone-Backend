@@ -2,6 +2,7 @@
 using AlibabaClone.Application.DTOs.AccountDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
+using AlibabaClone.Domain.Aggregates.AccountAggregates;
 using AlibabaClone.Domain.Framework.Interfaces;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
 using AutoMapper;
@@ -11,6 +12,7 @@ namespace AlibabaClone.Application.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IBankAccountRepository _bankAccountRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -78,6 +80,8 @@ namespace AlibabaClone.Application.Services
             return Result<long>.Success(account.Id);
         }
 
+        // a method to check validity of password
+        // used just above
         private static bool IsPasswordStrong(string password)
         {
             if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
@@ -86,6 +90,54 @@ namespace AlibabaClone.Application.Services
             bool hasDigit = password.Any(char.IsDigit);
             bool hasLetter = password.Any(char.IsLetter);
             return hasDigit && hasLetter;
+        }
+
+        public async Task<Result<long>> UpsertBankAccountAsync(long accountId, UpsertBankAccountDto dto)
+        {
+            var error = ValidateBankInfo(dto);
+            if (!string.IsNullOrEmpty(error))
+            {
+                return Result<long>.Error(0, error);
+            }
+
+            var bankAccount = await _bankAccountRepository.GetByAccountIdAsync(accountId);
+            // if no account exists, then add one with the info given
+            if (bankAccount == null)
+            {
+                bankAccount = new BankAccount()
+                {
+                    AccountId = accountId,
+                    BankAccountNumber = dto.BankAccountNumber,
+                    CardNumber = dto.CardNumber,
+                    IBAN = dto.IBAN
+                };
+                await _bankAccountRepository.InsertAsync(bankAccount);
+            }
+            else
+            {
+                bankAccount.BankAccountNumber = dto.BankAccountNumber;
+                bankAccount.CardNumber = dto.CardNumber;
+                bankAccount.IBAN = dto.IBAN;
+                
+                _bankAccountRepository.Update(bankAccount);
+            }
+
+            await _unitOfWork.CompleteAsync();
+            return Result<long>.Success(accountId);
+        }
+
+        private static string ValidateBankInfo(UpsertBankAccountDto dto)
+        {
+            if (!string.IsNullOrEmpty(dto.IBAN) && dto.IBAN.Length != 24 && dto.IBAN.Any(x => char.IsDigit(x) == false))
+                return "IBAN must be 24 digits";
+
+            if (!string.IsNullOrEmpty(dto.CardNumber))
+            {
+                var digitsOnly = dto.CardNumber.Replace("-", "");
+                if (digitsOnly.Length != 16 || !digitsOnly.All(char.IsDigit))
+                    return "Invalid card-number format";
+            }
+            return "";
         }
     }
 }

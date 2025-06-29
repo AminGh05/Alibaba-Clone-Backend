@@ -69,5 +69,25 @@ namespace AlibabaClone.WebAPI.Controllers
             await _accountService.UpdatePasswordAsync(accountId, dto.OldPassword, dto.NewPassword);
             return NoContent();
         }
+
+        [HttpPost("bank-account-details")]
+        public async Task<IActionResult> UpsertBankAccountDetails([FromBody] UpsertBankAccountDto dto)
+        {
+            var accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _accountService.UpsertBankAccountAsync(accountId, dto);
+            return result.Status switch
+            {
+                ResultStatus.Success => NoContent(),
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
     }
 }
