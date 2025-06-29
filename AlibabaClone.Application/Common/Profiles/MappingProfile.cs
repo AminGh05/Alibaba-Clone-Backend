@@ -29,16 +29,28 @@ namespace AlibabaClone.Application.Common.Profiles
 				.ForMember(dest => dest.AccountRoles, opt => opt.Ignore());
 
 			CreateMap<Account, ProfileDto>()
-				.ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+				.ForMember(dest => dest.AccountPhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
 				.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
 				.ForMember(dest => dest.Balance, opt => opt.MapFrom(src => src.Balance))
 				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person != null ? src.Person.FirstName : ""))
 				.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person != null ? src.Person.LastName : ""))
 				.ForMember(dest => dest.IdNumber, opt => opt.MapFrom(src => src.Person != null ? src.Person.IdNumber : ""))
+				.ForMember(dest => dest.PersonPhoneNumber, opt => opt.MapFrom(src => src.Person != null ? src.Person.PhoneNumber : ""))
 				.ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.Person != null ? src.Person.BirthDate : (DateTime?) null))
 				.ForMember(dest => dest.IBAN, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.IBAN : ""))
 				.ForMember(dest => dest.BankAccountNumber, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.BankAccountNumber : ""))
 				.ForMember(dest => dest.CardNumber, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.CardNumber : ""));
+
+            CreateMap<Person, PersonDto>()
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CreatorId, opt => opt.MapFrom(src => src.CreatorId))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.IdNumber, opt => opt.MapFrom(src => src.IdNumber))
+                .ForMember(dest => dest.GenderId, opt => opt.MapFrom(src => src.GenderId))
+				.ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate))
+                .ReverseMap();
         }
 	}
 }

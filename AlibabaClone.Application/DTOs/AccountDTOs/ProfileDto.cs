@@ -3,7 +3,7 @@
     public class ProfileDto
     {
         // from account
-        public string PhoneNumber { get; set; }
+        public string AccountPhoneNumber { get; set; }
         public string Email { get; set; }
         public decimal Balance { get; set; }
 
@@ -11,6 +11,7 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string IdNumber { get; set; }
+        public string PersonPhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
 
         // from bank-account

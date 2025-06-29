@@ -10,7 +10,8 @@ namespace AlibabaClone.Domain.Aggregates.AccountAggregates
 		public required string IdNumber { get; set; }
 		public DateTime BirthDate { get; set; }
 		public short GenderId { get; set; }
-		public string? PassportNumber { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? PassportNumber { get; set; }
         public long CreatorId { get; set; }
 
         #region Navigation Properties
