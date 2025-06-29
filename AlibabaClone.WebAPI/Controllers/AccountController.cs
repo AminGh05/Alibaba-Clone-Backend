@@ -11,11 +11,13 @@ namespace AlibabaClone.WebAPI.Controllers
     {
         private readonly IUserContext _userContext;
         private readonly IAccountService _accountService;
+        private readonly IPersonService _personService;
 
-        public AccountController(IUserContext userContext, IAccountService accountService)
+        public AccountController(IUserContext userContext, IAccountService accountService, IPersonService personService)
         {
             _userContext = userContext;
             _accountService = accountService;
+            _personService = personService;
         }
 
         [HttpGet("profile")]
@@ -107,6 +109,46 @@ namespace AlibabaClone.WebAPI.Controllers
 
             return result.Status switch
             {
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
+
+        [HttpPost("account-person")]
+        public async Task<IActionResult> UpsertAccountPerson([FromBody] PersonDto dto)
+        {
+            long accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _personService.UpsertAccountPersonAsync(accountId, dto);
+            return result.Status switch
+            {
+                ResultStatus.Success => NoContent(),
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
+
+        [HttpPost("person")]
+        public async Task<IActionResult> UpsertPerson([FromBody] PersonDto dto)
+        {
+            long accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _personService.UpsertPersonAsync(accountId, dto);
+            return result.Status switch
+            {
+                ResultStatus.Success => NoContent(),
                 ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
                 ResultStatus.NotFound => NotFound(result.ErrorMessage),
                 ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
