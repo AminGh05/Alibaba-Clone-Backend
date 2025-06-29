@@ -17,6 +17,19 @@ namespace AlibabaClone.Application.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
+        public AccountService(IAccountRepository accountRepository,
+            IBankAccountRepository bankAccountRepository,
+            IPersonRepository personRepository,
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
+        {
+            _accountRepository = accountRepository;
+            _bankAccountRepository = bankAccountRepository;
+            _personRepository = personRepository;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+        }
+
         public async Task<Result<ProfileDto>> GetProfileAsync(long accountId)
         {
             var result = await _accountRepository.GetProfileAsync(accountId);
