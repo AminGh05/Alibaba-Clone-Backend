@@ -89,5 +89,29 @@ namespace AlibabaClone.WebAPI.Controllers
                 _ => StatusCode(500, result.ErrorMessage)
             };
         }
+
+        [HttpGet("people")]
+        public async Task<IActionResult> GetPeople()
+        {
+            long accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _accountService.GetAllPeopleAsync(accountId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+
+            return result.Status switch
+            {
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace AlibabaClone.Application.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IBankAccountRepository _bankAccountRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -138,6 +139,17 @@ namespace AlibabaClone.Application.Services
                     return "Invalid card-number format";
             }
             return "";
+        }
+
+        public async Task<Result<List<PersonDto>>> GetAllPeopleAsync(long accountId)
+        {
+            var result = await _personRepository.GetAllByCreatorIdAsync(accountId);
+            if (result == null)
+            {
+                return Result<List<PersonDto>>.NotFound(null);
+            }
+
+            return Result<List<PersonDto>>.Success(_mapper.Map<List<PersonDto>>(result));
         }
     }
 }
