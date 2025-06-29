@@ -2,7 +2,7 @@
 
 namespace AlibabaClone.Application.DTOs.AccountDTOs
 {
-    public class UpsertPersonDto
+    public class UpsertAccountPersonDto
     {
         public long Id { get; set; }
         public long CreatorId { get; set; }
