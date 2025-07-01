@@ -1,8 +1,10 @@
 ﻿using AlibabaClone.Application.DTOs.AccountDTOs;
 using AlibabaClone.Application.DTOs.CityDTOs;
+using AlibabaClone.Application.DTOs.TransactionDTOs;
 using AlibabaClone.Application.DTOs.TransportationDTOs;
 using AlibabaClone.Domain.Aggregates.AccountAggregates;
 using AlibabaClone.Domain.Aggregates.LocationAggregates;
+using AlibabaClone.Domain.Aggregates.TransactionAggregates;
 using AlibabaClone.Domain.Aggregates.TransportationAggregates;
 using AutoMapper;
 
@@ -51,6 +53,19 @@ namespace AlibabaClone.Application.Common.Profiles
 				.ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate))
                 .ReverseMap();
+
+			CreateMap<TicketOrder, TicketOrderSummaryDto>()
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+				.ForMember(dest => dest.SerialNumber, opt => opt.MapFrom(src => src.SerialNumber))
+				.ForMember(dest => dest.BoughtAt, opt => opt.MapFrom(src => src.CreatedAt))
+				.ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Transaction != null ? src.Transaction.FinalAmount : 0))
+				.ForMember(dest => dest.TravelStartDate, opt => opt.MapFrom(src => src.Transportation.StartDateTime))
+				.ForMember(dest => dest.TravelEndDate, opt => opt.MapFrom(src => src.Transportation.EndDateTime))
+				.ForMember(dest => dest.FromCity, opt => opt.MapFrom(src => src.Transportation.FromLocation.City.Title))
+				.ForMember(dest => dest.ToCity, opt => opt.MapFrom(src => src.Transportation.ToLocation.City.Title))
+				.ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Transportation.Company.Title))
+				.ForMember(dest => dest.VehicleTypeId, opt => opt.MapFrom(src => src.Transportation.Vehicle.VehicleTypeId))
+				.ForMember(dest => dest.VehicleName, opt => opt.MapFrom(src => src.Transportation.Vehicle.Title));
         }
 	}
 }
