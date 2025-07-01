@@ -1,10 +1,12 @@
 ﻿using AlibabaClone.Application.Common.Utils;
 using AlibabaClone.Application.DTOs.AccountDTOs;
+using AlibabaClone.Application.DTOs.TransactionDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Aggregates.AccountAggregates;
 using AlibabaClone.Domain.Framework.Interfaces;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
+using AlibabaClone.Domain.Framework.Interfaces.Repositories.TransactionRepositories;
 using AutoMapper;
 
 namespace AlibabaClone.Application.Services
@@ -14,18 +16,21 @@ namespace AlibabaClone.Application.Services
         private readonly IAccountRepository _accountRepository;
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly ITicketOrderRepository _ticketOrderRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
         public AccountService(IAccountRepository accountRepository,
             IBankAccountRepository bankAccountRepository,
             IPersonRepository personRepository,
+            ITicketOrderRepository ticketOrderRepository,
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
             _accountRepository = accountRepository;
             _bankAccountRepository = bankAccountRepository;
             _personRepository = personRepository;
+            _ticketOrderRepository = ticketOrderRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
@@ -163,6 +168,17 @@ namespace AlibabaClone.Application.Services
             }
 
             return Result<List<PersonDto>>.Success(_mapper.Map<List<PersonDto>>(result));
+        }
+
+        public async Task<Result<List<TicketOrderSummaryDto>>> GetTravelsAsync(long accountId)
+        {
+            var result = await _ticketOrderRepository.GetAllByBuyerId(accountId);
+            if (result == null)
+            {
+                return Result<List<TicketOrderSummaryDto>>.NotFound(null);
+            }
+
+            return Result<List<TicketOrderSummaryDto>>.Success(_mapper.Map<List<TicketOrderSummaryDto>>(result));
         }
     }
 }
