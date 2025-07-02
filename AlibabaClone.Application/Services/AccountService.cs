@@ -17,6 +17,7 @@ namespace AlibabaClone.Application.Services
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly IPersonRepository _personRepository;
         private readonly ITicketOrderRepository _ticketOrderRepository;
+        private readonly ITransactionRepository _transactionRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -24,6 +25,7 @@ namespace AlibabaClone.Application.Services
             IBankAccountRepository bankAccountRepository,
             IPersonRepository personRepository,
             ITicketOrderRepository ticketOrderRepository,
+            ITransactionRepository transactionRepository,
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
@@ -31,6 +33,7 @@ namespace AlibabaClone.Application.Services
             _bankAccountRepository = bankAccountRepository;
             _personRepository = personRepository;
             _ticketOrderRepository = ticketOrderRepository;
+            _transactionRepository = transactionRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
@@ -179,6 +182,17 @@ namespace AlibabaClone.Application.Services
             }
 
             return Result<List<TicketOrderSummaryDto>>.Success(_mapper.Map<List<TicketOrderSummaryDto>>(result));
+        }
+
+        public async Task<Result<List<TransactionDto>>> GetTransactionsAsync(long accountId)
+        {
+            var result = await _transactionRepository.GetTransactionsByAccountIdAsync(accountId);
+            if (result == null)
+            {
+                return Result<List<TransactionDto>>.NotFound(null);
+            }
+
+            return Result<List<TransactionDto>>.Success(_mapper.Map<List<TransactionDto>>(result));
         }
     }
 }
