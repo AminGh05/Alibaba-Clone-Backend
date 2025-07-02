@@ -48,6 +48,7 @@ namespace AlibabaClone.Application.Services
 
             var response = new AuthResponseDto
             {
+                Id = accountDto.Id,
                 PhoneNumber = accountDto.PhoneNumber,
                 Roles = accountDto.Roles
             };

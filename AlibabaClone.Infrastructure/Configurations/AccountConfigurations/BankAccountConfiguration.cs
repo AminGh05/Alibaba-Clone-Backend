@@ -15,25 +15,25 @@ namespace AlibabaClone.Infrastructure.Configurations.AccountConfigurations
 
             // bank-name
             builder.Property(ba => ba.BankName)
-                .IsRequired()
+                .IsRequired(false)
                 .IsUnicode(false)
                 .HasMaxLength(50);
 
             // card-number
             builder.Property(ba => ba.CardNumber)
-                .IsRequired()
+                .IsRequired(false)
                 .IsUnicode(false)
                 .HasMaxLength(16);
 
             // iban
             builder.Property(ba => ba.IBAN)
-                .IsRequired()
+                .IsRequired(false)
                 .IsUnicode(false)
                 .HasMaxLength(24);
 
             // bank-account-number
             builder.Property(ba => ba.BankAccountNumber)
-                .IsRequired()
+                .IsRequired(false)
                 .IsUnicode(false)
                 .HasMaxLength(50);
 

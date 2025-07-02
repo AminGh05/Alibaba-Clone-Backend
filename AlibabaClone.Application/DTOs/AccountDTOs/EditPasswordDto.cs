@@ -11,7 +11,7 @@ namespace AlibabaClone.Application.DTOs.AccountDTOs
         [MinLength(8, ErrorMessage = "At least 8 chars")]
         public string NewPassword { get; set; }
 
-        [Compare("Password", ErrorMessage = "Password doesn't match")]
+        [Compare("NewPassword", ErrorMessage = "Password doesn't match")]
         public string ConfirmNewPassword { get; set; }
     }
 }

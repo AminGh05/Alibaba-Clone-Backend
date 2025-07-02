@@ -2,13 +2,14 @@
 using AlibabaClone.Application.DTOs.TransactionDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace AlibabaClone.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "User")]
     public class AccountController : ControllerBase
     {
         private readonly IUserContext _userContext;

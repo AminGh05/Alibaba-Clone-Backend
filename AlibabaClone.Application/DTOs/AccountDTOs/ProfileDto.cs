@@ -17,6 +17,6 @@
         // from bank-account
         public string IBAN { get; set; }
         public string BankAccountNumber { get; set; }
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
     }
 }
