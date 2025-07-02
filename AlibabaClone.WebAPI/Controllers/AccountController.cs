@@ -1,7 +1,9 @@
 ﻿using AlibabaClone.Application.DTOs.AccountDTOs;
+using AlibabaClone.Application.DTOs.TransactionDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace AlibabaClone.WebAPI.Controllers
 {
@@ -190,6 +192,35 @@ namespace AlibabaClone.WebAPI.Controllers
             }
 
             var result = await _accountService.GetTransactionsAsync(accountId);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+
+            return result.Status switch
+            {
+                ResultStatus.Unauthorized => Unauthorized(result.ErrorMessage),
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage)
+            };
+        }
+
+        [HttpPost("top-up")]
+        public async Task<IActionResult> TopUpAccount(TopUpDto dto)
+        {
+            if (dto.Amount <= 0)
+            {
+                return BadRequest("Amount should be positive");
+            }
+
+            long accountId = _userContext.GetUserId();
+            if (accountId <= 0)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _accountService.TopUpAsync(accountId, dto);
             if (result.IsSuccess)
             {
                 return Ok(result.Data);

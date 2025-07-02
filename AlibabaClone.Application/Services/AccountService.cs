@@ -18,6 +18,7 @@ namespace AlibabaClone.Application.Services
         private readonly IPersonRepository _personRepository;
         private readonly ITicketOrderRepository _ticketOrderRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -26,6 +27,7 @@ namespace AlibabaClone.Application.Services
             IPersonRepository personRepository,
             ITicketOrderRepository ticketOrderRepository,
             ITransactionRepository transactionRepository,
+            ITransactionService transactionService,
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
@@ -34,6 +36,7 @@ namespace AlibabaClone.Application.Services
             _personRepository = personRepository;
             _ticketOrderRepository = ticketOrderRepository;
             _transactionRepository = transactionRepository;
+            _transactionService = transactionService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
@@ -193,6 +196,22 @@ namespace AlibabaClone.Application.Services
             }
 
             return Result<List<TransactionDto>>.Success(_mapper.Map<List<TransactionDto>>(result));
+        }
+
+        public async Task<Result<long>> TopUpAsync(long accountId, TopUpDto dto)
+        {
+            var account = await _accountRepository.GetByIdAsync(accountId);
+            if (account == null)
+            {
+                return Result<long>.Error(0, "Account not found");
+            }
+
+            account.Deposit(dto.Amount);
+            _accountRepository.Update(account);
+            await _unitOfWork.CompleteAsync();
+
+            var transactionId = await _transactionService.CreateTopUpAsync(accountId, dto.Amount);
+            return Result<long>.Success(transactionId.Data);
         }
     }
 }
