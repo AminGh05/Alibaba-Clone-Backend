@@ -59,6 +59,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 #endregion
 
 // register auto-mapper
