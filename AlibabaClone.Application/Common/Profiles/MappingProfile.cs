@@ -66,6 +66,10 @@ namespace AlibabaClone.Application.Common.Profiles
 				.ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Transportation.Company.Title))
 				.ForMember(dest => dest.VehicleTypeId, opt => opt.MapFrom(src => src.Transportation.Vehicle.VehicleTypeId))
 				.ForMember(dest => dest.VehicleName, opt => opt.MapFrom(src => src.Transportation.Vehicle.Title));
+
+			CreateMap<Transaction, TransactionDto>()
+				.ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.TransactionType.Title));
+			CreateMap<TransactionDto, Transaction>();
         }
 	}
 }
