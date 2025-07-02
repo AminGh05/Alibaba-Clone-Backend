@@ -39,7 +39,7 @@ namespace AlibabaClone.Infrastructure.Configurations.TicketConfigurations
 
 			// ticket-order-id
 			builder.Property(t => t.TicketOrderId)
-				.IsRequired();
+				.IsRequired(false);
 
 			// created date-time
 			builder.Property(t => t.CreatedAt)
