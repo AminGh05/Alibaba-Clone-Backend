@@ -33,6 +33,9 @@ namespace AlibabaClone.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -46,7 +49,7 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .HasColumnType("char(64)")
                         .IsFixedLength();
 
-                    b.Property<long>("PersonId")
+                    b.Property<long?>("PersonId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
@@ -57,7 +60,9 @@ namespace AlibabaClone.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("PersonId")
+                        .IsUnique()
+                        .HasFilter("[PersonId] IS NOT NULL");
 
                     b.ToTable("Accounts");
                 });
@@ -75,6 +80,45 @@ namespace AlibabaClone.Infrastructure.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("AccountRoles");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.BankAccount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BankAccountNumber")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("CardNumber")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
+
+                    b.Property<string>("IBAN")
+                        .HasMaxLength(24)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(24)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId")
+                        .IsUnique();
+
+                    b.ToTable("BankAccount");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.Gender", b =>
@@ -109,6 +153,9 @@ namespace AlibabaClone.Infrastructure.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("date");
 
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -133,12 +180,14 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderId");
+                    b.HasIndex("CreatorId");
 
-                    b.HasIndex("IdNumber")
-                        .IsUnique();
+                    b.HasIndex("GenderId");
 
                     b.ToTable("People");
                 });
@@ -243,8 +292,8 @@ namespace AlibabaClone.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("BuyerId")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime?>("CanceledAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("CompanionId")
                         .HasColumnType("bigint");
@@ -253,8 +302,8 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<long>("SeatId")
                         .HasColumnType("bigint");
@@ -265,30 +314,70 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<long>("TicketOrderId")
+                        .HasColumnType("bigint");
+
                     b.Property<short>("TicketStatusId")
                         .HasColumnType("smallint");
-
-                    b.Property<long>("TransportationId")
-                        .HasColumnType("bigint");
 
                     b.Property<long>("TravelerId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
-
                     b.HasIndex("CompanionId");
 
                     b.HasIndex("SeatId");
 
-                    b.HasIndex("TicketStatusId");
+                    b.HasIndex("SerialNumber")
+                        .IsUnique();
 
-                    b.HasIndex("TransportationId");
+                    b.HasIndex("TicketOrderId");
+
+                    b.HasIndex("TicketStatusId");
 
                     b.HasIndex("TravelerId");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketOrder", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("BuyerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<long>("TransportationId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("SerialNumber")
+                        .IsUnique();
+
+                    b.HasIndex("TransportationId");
+
+                    b.ToTable("TicketOrder");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketStatus", b =>
@@ -320,11 +409,18 @@ namespace AlibabaClone.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("BaseAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("FinalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -335,14 +431,44 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<long>("TicketId")
+                    b.Property<long?>("TicketOrderId")
                         .HasColumnType("bigint");
+
+                    b.Property<short>("TransactionTypeId")
+                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TicketId");
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("TicketOrderId")
+                        .IsUnique()
+                        .HasFilter("[TicketOrderId] IS NOT NULL");
+
+                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.TransactionType", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("TransactionType");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransportationAggregates.Company", b =>
@@ -421,9 +547,6 @@ namespace AlibabaClone.Infrastructure.Migrations
                     b.Property<int>("FromLocationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RemainingCapacity")
                         .HasColumnType("int");
 
@@ -450,8 +573,6 @@ namespace AlibabaClone.Infrastructure.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("FromLocationId");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("ToLocationId");
 
@@ -519,36 +640,58 @@ namespace AlibabaClone.Infrastructure.Migrations
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", b =>
                 {
                     b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Person", "Person")
-                        .WithMany("Accounts")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithOne()
+                        .HasForeignKey("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Person");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.AccountRole", b =>
                 {
-                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", null)
-                        .WithMany()
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Account")
+                        .WithMany("AccountRoles")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Role", null)
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.BankAccount", b =>
+                {
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Account")
+                        .WithOne("BankAccount")
+                        .HasForeignKey("AlibabaClone.Domain.Aggregates.AccountAggregates.BankAccount", "AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.Person", b =>
                 {
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Creator")
+                        .WithMany("PeopleCreated")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Gender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Gender");
                 });
@@ -574,12 +717,6 @@ namespace AlibabaClone.Infrastructure.Migrations
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.Ticket", b =>
                 {
-                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Buyer")
-                        .WithMany("BoughtTickets")
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Person", "Companion")
                         .WithMany()
                         .HasForeignKey("CompanionId")
@@ -591,15 +728,15 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketStatus", "TicketStatus")
-                        .WithMany()
-                        .HasForeignKey("TicketStatusId")
+                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketOrder", "TicketOrder")
+                        .WithMany("Tickets")
+                        .HasForeignKey("TicketOrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AlibabaClone.Domain.Aggregates.TransportationAggregates.Transportation", "Transportation")
-                        .WithMany("Tickets")
-                        .HasForeignKey("TransportationId")
+                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketStatus", "TicketStatus")
+                        .WithMany()
+                        .HasForeignKey("TicketStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -609,28 +746,60 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Buyer");
-
                     b.Navigation("Companion");
 
                     b.Navigation("Seat");
 
-                    b.Navigation("TicketStatus");
+                    b.Navigation("TicketOrder");
 
-                    b.Navigation("Transportation");
+                    b.Navigation("TicketStatus");
 
                     b.Navigation("Traveler");
                 });
 
-            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.Transaction", b =>
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketOrder", b =>
                 {
-                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Buyer")
+                        .WithMany("BoughtTicketOrders")
+                        .HasForeignKey("BuyerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Ticket");
+                    b.HasOne("AlibabaClone.Domain.Aggregates.TransportationAggregates.Transportation", "Transportation")
+                        .WithMany("TicketOrders")
+                        .HasForeignKey("TransportationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Transportation");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.Transaction", b =>
+                {
+                    b.HasOne("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", "Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketOrder", "TicketOrder")
+                        .WithOne("Transaction")
+                        .HasForeignKey("AlibabaClone.Domain.Aggregates.TransactionAggregates.Transaction", "TicketOrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("AlibabaClone.Domain.Aggregates.TransactionAggregates.TransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("TicketOrder");
+
+                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransportationAggregates.Seat", b =>
@@ -653,17 +822,13 @@ namespace AlibabaClone.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("AlibabaClone.Domain.Aggregates.LocationAggregates.Location", "FromLocation")
-                        .WithMany()
+                        .WithMany("TransportationsFrom")
                         .HasForeignKey("FromLocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AlibabaClone.Domain.Aggregates.LocationAggregates.Location", null)
-                        .WithMany("Transportations")
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("AlibabaClone.Domain.Aggregates.LocationAggregates.Location", "ToLocation")
-                        .WithMany()
+                        .WithMany("TransportationsTo")
                         .HasForeignKey("ToLocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -696,13 +861,19 @@ namespace AlibabaClone.Infrastructure.Migrations
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.Account", b =>
                 {
-                    b.Navigation("BoughtTickets");
+                    b.Navigation("AccountRoles");
+
+                    b.Navigation("BankAccount");
+
+                    b.Navigation("BoughtTicketOrders");
+
+                    b.Navigation("PeopleCreated");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.AccountAggregates.Person", b =>
                 {
-                    b.Navigation("Accounts");
-
                     b.Navigation("TraveledTickets");
                 });
 
@@ -713,12 +884,22 @@ namespace AlibabaClone.Infrastructure.Migrations
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.LocationAggregates.Location", b =>
                 {
-                    b.Navigation("Transportations");
+                    b.Navigation("TransportationsFrom");
+
+                    b.Navigation("TransportationsTo");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.LocationAggregates.LocationType", b =>
                 {
                     b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransactionAggregates.TicketOrder", b =>
+                {
+                    b.Navigation("Tickets");
+
+                    b.Navigation("Transaction")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransportationAggregates.Company", b =>
@@ -733,7 +914,7 @@ namespace AlibabaClone.Infrastructure.Migrations
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransportationAggregates.Transportation", b =>
                 {
-                    b.Navigation("Tickets");
+                    b.Navigation("TicketOrders");
                 });
 
             modelBuilder.Entity("AlibabaClone.Domain.Aggregates.TransportationAggregates.Vehicle", b =>
