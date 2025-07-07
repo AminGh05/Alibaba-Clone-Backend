@@ -35,7 +35,7 @@ namespace AlibabaClone.Application.Services
             }
             
             // if account is not null, update its person
-            Person person;
+            Person? person;
             if (account.PersonId.HasValue)
             {
                 person = await _personRepository.GetByIdAsync(account.PersonId.Value);
@@ -72,7 +72,8 @@ namespace AlibabaClone.Application.Services
                 throw new Exception("Account not found");
             }
 
-            Person person = (await _personRepository.FindAsync(p => p.IdNumber == dto.IdNumber && p.CreatorId == accountId)).FirstOrDefault();
+            Person? person = (await _personRepository.FindAsync(p => p.IdNumber == dto.IdNumber && p.CreatorId == accountId))
+                .FirstOrDefault();
             if (person != null)
             {
                 if (dto.Id > 0 && dto.Id != person.Id)
