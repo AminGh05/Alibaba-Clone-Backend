@@ -4,15 +4,16 @@ namespace AlibabaClone.Application.DTOs.AccountDTOs
 {
     public class UpsertBankAccountDto
     {
-        [MinLength(24)]
-        [MaxLength(24)]
+        [MaxLength(27)]
+        [MinLength(27)]
         public string? IBAN { get; set; }
 
-        [MinLength(16)]
         [MaxLength(16)]
+        [MinLength(16)]
         public string? CardNumber { get; set; }
 
-        [MinLength(8)]
+        [MaxLength(15)]
+        [MinLength(15)]
         public string? BankAccountNumber { get; set; }
     }
 }
