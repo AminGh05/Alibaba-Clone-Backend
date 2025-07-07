@@ -31,7 +31,7 @@ namespace AlibabaClone.Application.Services
                 Description = "Top-up at " + DateTime.UtcNow,
                 BaseAmount = amount,
                 FinalAmount = amount,
-                SerialNumber = new Guid().ToString("N"),
+                SerialNumber = Guid.NewGuid().ToString("N"),
                 TransactionTypeId = 1,
                 TicketOrderId = null
             };
