@@ -1,4 +1,5 @@
-﻿using AlibabaClone.Application.Interfaces;
+﻿using AlibabaClone.Application.DTOs.TransactionDTOs;
+using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Aggregates.TransactionAggregates;
 using AlibabaClone.Domain.Framework.Interfaces;
@@ -20,6 +21,17 @@ namespace AlibabaClone.Application.Services
             _transactionRepository = transactionRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+        }
+
+        public async Task<Result<long>> CreateAsync(long accountId, TransactionDto dto)
+        {
+            Transaction transaction = new();
+            _mapper.Map(dto, transaction);
+            transaction.AccountId = accountId;
+
+            await _transactionRepository.InsertAsync(transaction);
+            await _unitOfWork.CompleteAsync();
+            return Result<long>.Success(transaction.Id);
         }
 
         public async Task<Result<long>> CreateTopUpAsync(long accountId, decimal amount)

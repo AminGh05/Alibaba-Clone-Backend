@@ -4,6 +4,7 @@ using AlibabaClone.Application.DTOs.TransactionDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Aggregates.AccountAggregates;
+using AlibabaClone.Domain.Enums;
 using AlibabaClone.Domain.Framework.Interfaces;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.AccountRepositories;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.TransactionRepositories;
@@ -212,6 +213,38 @@ namespace AlibabaClone.Application.Services
 
             var transactionId = await _transactionService.CreateTopUpAsync(accountId, dto.Amount);
             return Result<long>.Success(transactionId.Data);
+        }
+
+        public async Task<Result<long>> PayForTicketOrderAsync(long accountId, long ticketOrderId, decimal baseAmount, decimal finalAmount)
+        {
+            var account = await _accountRepository.GetByIdAsync(accountId);
+            if (account == null)
+            {
+                return Result<long>.Error(0, "Account not found");
+            }
+
+            if (account.Balance < finalAmount)
+            {
+                return Result<long>.Error(0, "Not enough money");
+            }
+
+            account.Withdraw(finalAmount);
+            _accountRepository.Update(account);
+            await _unitOfWork.CompleteAsync();
+
+            TransactionDto dto = new()
+            {
+                CreatedAt = DateTime.UtcNow,
+                Description = "Payment for ticket order #" + ticketOrderId + " at " + DateTime.UtcNow,
+                BaseAmount = baseAmount,
+                FinalAmount = finalAmount,
+                SerialNumber = Guid.NewGuid().ToString("N"),
+                TicketOrderId = ticketOrderId,
+                TransactionTypeId = (int)TransactionTypeEnum.Withdraw,
+                TransactionType = TransactionTypeEnum.Withdraw.ToString()
+            };
+
+            return await _transactionService.CreateAsync(accountId, dto);
         }
     }
 }
