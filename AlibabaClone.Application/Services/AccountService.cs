@@ -179,7 +179,7 @@ namespace AlibabaClone.Application.Services
 
         public async Task<Result<List<TicketOrderSummaryDto>>> GetTravelsAsync(long accountId)
         {
-            var result = await _ticketOrderRepository.GetAllByBuyerId(accountId);
+            var result = await _ticketOrderRepository.GetAllByBuyerIdAsync(accountId);
             if (result == null)
             {
                 return Result<List<TicketOrderSummaryDto>>.NotFound(null);
