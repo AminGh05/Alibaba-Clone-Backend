@@ -69,8 +69,18 @@ namespace AlibabaClone.Application.Common.Profiles
                 .ForMember(dest => dest.VehicleName, opt => opt.MapFrom(src => src.Transportation.Vehicle.Title));
 
             CreateMap<Transaction, TransactionDto>()
-                .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.TransactionType.Title));
-            CreateMap<TransactionDto, Transaction>();
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.TransactionType.Title))
+                .ForMember(dest => dest.BaseAmount, opt => opt.MapFrom(src => src.BaseAmount))
+                .ForMember(dest => dest.FinalAmount, opt => opt.MapFrom(src => src.FinalAmount))
+                .ForMember(dest => dest.SerialNumber, opt => opt.MapFrom(src => src.SerialNumber))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
+
+            CreateMap<TransactionDto, Transaction>()
+                .ForMember(dest => dest.TransactionType, opt => opt.Ignore())
+                .ForMember(dest => dest.TransactionTypeId, opt => opt.MapFrom(src => src.TransactionType == "Deposit" ? 1 : 2));
+
+            CreateMap<CreateTravellerTicketDto, PersonDto>();
 
             CreateMap<Seat, TransportationSeatDto>()
                 .ForMember(dest => dest.IsReserved, opt => opt.MapFrom(src => src.Tickets.Any(t => t.TicketStatusId == (int)TicketStatusEnum.Reserved)))
