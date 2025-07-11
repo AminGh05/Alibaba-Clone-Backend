@@ -1,6 +1,7 @@
 ﻿using AlibabaClone.Application.Common.Utils;
 using AlibabaClone.Application.DTOs.AccountDTOs;
 using AlibabaClone.Application.DTOs.TransactionDTOs;
+using AlibabaClone.Application.DTOs.TransportationDTOs;
 using AlibabaClone.Application.Interfaces;
 using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Aggregates.AccountAggregates;
@@ -19,6 +20,7 @@ namespace AlibabaClone.Application.Services
         private readonly IPersonRepository _personRepository;
         private readonly ITicketOrderRepository _ticketOrderRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly ITicketRepository _ticketRepository;
         private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
@@ -28,6 +30,7 @@ namespace AlibabaClone.Application.Services
             IPersonRepository personRepository,
             ITicketOrderRepository ticketOrderRepository,
             ITransactionRepository transactionRepository,
+            ITicketRepository ticketRepository,
             ITransactionService transactionService,
             IMapper mapper,
             IUnitOfWork unitOfWork)
@@ -37,6 +40,7 @@ namespace AlibabaClone.Application.Services
             _personRepository = personRepository;
             _ticketOrderRepository = ticketOrderRepository;
             _transactionRepository = transactionRepository;
+            _ticketRepository = ticketRepository;
             _transactionService = transactionService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -245,6 +249,22 @@ namespace AlibabaClone.Application.Services
             };
 
             return await _transactionService.CreateAsync(accountId, dto);
+        }
+
+        public async Task<Result<List<TravellerTicketDto>>> GetTicketOrderDetailsAsync(long accoundId, long ticketOrderid)
+        {
+            var result = await _ticketRepository.GetTicketsByTicketOrderId(ticketOrderid);
+            if (result != null)
+            {
+                if (result.Count > 0 && result.First().TicketOrder.BuyerId != accoundId)
+                {
+                    return Result<List<TravellerTicketDto>>.Error(null, "Account unauthorized");
+                }
+
+                return Result<List<TravellerTicketDto>>.Success(_mapper.Map<List<TravellerTicketDto>>(result));
+            }
+
+            return Result<List<TravellerTicketDto>>.NotFound(null);
         }
     }
 }
