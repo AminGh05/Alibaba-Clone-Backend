@@ -75,7 +75,15 @@ namespace AlibabaClone.Application.Common.Profiles
             CreateMap<Seat, TransportationSeatDto>()
                 .ForMember(dest => dest.IsReserved, opt => opt.MapFrom(src => src.Tickets.Any(t => t.TicketStatusId == (int)TicketStatusEnum.Reserved)))
                 .ForMember(dest => dest.GenderId, opt => opt.MapFrom(src => src.Tickets.Any(t => t.TicketStatusId == (int)TicketStatusEnum.Reserved) ?
-                src.Tickets.First(t => t.TicketStatusId == (int)TicketStatusEnum.Reserved).Traveler.GenderId : (short?)null)); 
+                src.Tickets.First(t => t.TicketStatusId == (int)TicketStatusEnum.Reserved).Traveler.GenderId : (short?)null));
+
+            CreateMap<Ticket, TravellerTicketDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.TravellerName, opt => opt.MapFrom(src => src.Traveler != null ? $"{src.Traveler.FirstName} {src.Traveler.LastName}" : ""))
+                .ForMember(dest => dest.SerialNumber, opt => opt.MapFrom(src => src.SerialNumber))
+                .ForMember(dest => dest.TicketStatus, opt => opt.MapFrom(src => src.TicketStatus.Ttile))
+                .ForMember(dest => dest.CompanionName, opt => opt.MapFrom(src => src.Companion != null ? $"{src.Companion.FirstName} {src.Companion.LastName}" : ""))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
         }
     }
 }
