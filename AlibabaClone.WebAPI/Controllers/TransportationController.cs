@@ -39,6 +39,23 @@ namespace AlibabaClone.WebAPI.Controllers
 			};
 		}
 
+		[HttpGet("search/{transportationId}")]
+		public async Task<IActionResult> GetTransportation(long transportationId)
+		{
+			var result = await _transportationService.GetTransportationByIdAsync(transportationId);
+			if (result.IsSuccess)
+			{
+				return Ok(result.Data);
+			}
+
+            return result.Status switch
+            {
+                ResultStatus.NotFound => NotFound(result.ErrorMessage),
+                ResultStatus.ValidationError => BadRequest(result.ErrorMessage),
+                _ => StatusCode(500, result.ErrorMessage),
+            };
+        }
+
 		[HttpGet("{transportationId}/seats")]
 		public async Task<IActionResult> GetTransportationSeats(long transportationId)
 		{
