@@ -4,7 +4,6 @@ using AlibabaClone.Application.Result;
 using AlibabaClone.Domain.Framework.Interfaces;
 using AlibabaClone.Domain.Framework.Interfaces.Repositories.TransportationRepositories;
 using AutoMapper;
-using System.Reflection.Metadata.Ecma335;
 
 namespace AlibabaClone.Application.Services
 {

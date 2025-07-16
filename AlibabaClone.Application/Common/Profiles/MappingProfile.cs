@@ -93,7 +93,7 @@ namespace AlibabaClone.Application.Common.Profiles
                 .ForMember(dest => dest.SerialNumber, opt => opt.MapFrom(src => src.SerialNumber))
                 .ForMember(dest => dest.TicketStatus, opt => opt.MapFrom(src => src.TicketStatus.Ttile))
                 .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.Traveler.BirthDate))
-                .ForMember(dest => dest.SeatNumber, opt => opt.MapFrom(src => src.SeatId))
+                .ForMember(dest => dest.SeatNumber, opt => opt.MapFrom(src => src.Seat.Row + "-" + src.Seat.Column))
                 .ForMember(dest => dest.CompanionName, opt => opt.MapFrom(src => src.Companion != null ? $"{src.Companion.FirstName} {src.Companion.LastName}" : ""))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
         }
