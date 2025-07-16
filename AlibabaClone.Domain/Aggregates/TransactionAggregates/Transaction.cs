@@ -10,7 +10,7 @@ namespace AlibabaClone.Domain.Aggregates.TransactionAggregates
         public long? TicketOrderId { get; set; }
         public decimal BaseAmount { get; set; }
 		public decimal FinalAmount { get; set; }
-		public required string SerialNumber { get; set; }
+		public string SerialNumber { get; set; }
 		public DateTime CreatedAt { get; set; }
         public string? Description { get; set; }
 

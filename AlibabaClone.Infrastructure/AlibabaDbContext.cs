@@ -16,7 +16,8 @@ namespace AlibabaClone.Infrastructure
 		#region Account Aggregates
 		public DbSet<Account> Accounts { get; set; }
 		public DbSet<AccountRole> AccountRoles { get; set; }
-		public DbSet<Gender> Genders { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
+        public DbSet<Gender> Genders { get; set; }
 		public DbSet<Person> People { get; set; }
 		public DbSet<Role> Roles { get; set; }
 		#endregion
@@ -29,12 +30,14 @@ namespace AlibabaClone.Infrastructure
 
 		#region Transaction Aggregates
 		public DbSet<Ticket> Tickets { get; set; }
-		public DbSet<TicketStatus> TicketStatuses { get; set; }
+        public DbSet<TicketOrder> TicketOrders { get; set; }
+        public DbSet<TicketStatus> TicketStatuses { get; set; }
 		public DbSet<Transaction> Transactions { get; set; }
-		#endregion
+        public DbSet<TransactionType> TransactionTypes { get; set; }
+        #endregion
 
-		#region Transportation Aggregates
-		public DbSet<Company> Companies { get; set; }
+        #region Transportation Aggregates
+        public DbSet<Company> Companies { get; set; }
 		public DbSet<Seat> Seats { get; set; }
 		public DbSet<Transportation> Transportations { get; set; }
 		public DbSet<Vehicle> Vehicles { get; set; }

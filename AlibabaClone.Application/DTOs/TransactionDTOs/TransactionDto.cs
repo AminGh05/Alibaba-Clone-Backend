@@ -4,7 +4,6 @@
     {
         public long Id { get; set; }
         public short TransactionTypeId { get; set; }
-        public long AccountId { get; set; }
         public long? TicketOrderId { get; set; }
         public decimal BaseAmount { get; set; }
         public decimal FinalAmount { get; set; }

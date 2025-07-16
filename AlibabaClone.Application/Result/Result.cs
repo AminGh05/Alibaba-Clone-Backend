@@ -16,22 +16,20 @@
 			};
 		}
 
-		public static Result<T> Error(T data, string errorMessage)
+		public static Result<T> Error(string errorMessage)
 		{
 			return new Result<T>
 			{
 				Status = ResultStatus.Error,
-				Data = data,
 				ErrorMessage = errorMessage
 			};
 		}
 
-		public static Result<T> NotFound(T data)
+		public static Result<T> NotFound()
 		{
 			return new Result<T>
 			{
 				Status = ResultStatus.NotFound,
-				Data = data
 			};
 		}
 	}

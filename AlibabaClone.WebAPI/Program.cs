@@ -60,7 +60,11 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ITicketOrderService, TicketOrderService>();
 #endregion
+
+// register the lock used in reservation
+builder.Services.AddSingleton<ITransportationLockService, TransportationLockService>();
 
 // register auto-mapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));

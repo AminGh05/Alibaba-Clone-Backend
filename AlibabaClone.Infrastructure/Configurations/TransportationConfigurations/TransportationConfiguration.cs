@@ -44,8 +44,7 @@ namespace AlibabaClone.Infrastructure.Configurations.TransportationConfiguration
 				.IsUnicode(false);
 
 			// remaining capacity
-			builder.Property(t => t.RemainingCapacity)
-				.IsRequired();
+			builder.Ignore(t => t.RemainingCapacity);
 
 			// base price
 			builder.Property(t => t.BasePrice)
