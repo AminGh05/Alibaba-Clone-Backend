@@ -30,7 +30,7 @@ namespace AlibabaClone.Application.Services
 				return Result<IEnumerable<CityDto>>.Success(dto);
 			}
 
-			return Result<IEnumerable<CityDto>>.NotFound(null);
+			return Result<IEnumerable<CityDto>>.NotFound();
 		}
 	}
 }

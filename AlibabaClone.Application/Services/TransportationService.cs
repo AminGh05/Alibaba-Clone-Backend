@@ -30,7 +30,7 @@ namespace AlibabaClone.Application.Services
             var transportation = await _transportationRepository.GetByIdAsync(transportationId);
             if (transportation == null)
             {
-                return Result<TransportationSearchResultDto>.NotFound(null);
+                return Result<TransportationSearchResultDto>.NotFound();
             }
 
             return Result<TransportationSearchResultDto>.Success(_mapper.Map<TransportationSearchResultDto>(transportation));
@@ -41,7 +41,7 @@ namespace AlibabaClone.Application.Services
             var transportation = await _transportationRepository.GetByIdAsync(transportationId);
             if (transportation == null)
             {
-                return Result<List<TransportationSeatDto>>.Error(null, "Transportation not found");
+                return Result<List<TransportationSeatDto>>.Error("Transportation not found");
             }
 
             var seats = await _seatRepository.GetSeatsByVehicleIdAsync(transportation.VehicleId);
@@ -50,7 +50,7 @@ namespace AlibabaClone.Application.Services
                 return Result<List<TransportationSeatDto>>.Success(_mapper.Map<List<TransportationSeatDto>>(seats));
             }
 
-            return Result<List<TransportationSeatDto>>.NotFound(null);
+            return Result<List<TransportationSeatDto>>.NotFound();
         }
 
         public async Task<Result<IEnumerable<TransportationSearchResultDto>>> SearchTransportationsAsync(TransportationSearchRequestDto requestDto)
@@ -68,7 +68,7 @@ namespace AlibabaClone.Application.Services
                 return Result<IEnumerable<TransportationSearchResultDto>>.Success(dto);
             }
 
-            return Result<IEnumerable<TransportationSearchResultDto>>.NotFound(null);
+            return Result<IEnumerable<TransportationSearchResultDto>>.NotFound();
         }
     }
 }

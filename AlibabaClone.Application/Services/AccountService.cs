@@ -51,7 +51,7 @@ namespace AlibabaClone.Application.Services
             var result = await _accountRepository.GetProfileAsync(accountId);
             if (result == null)
             {
-                return Result<ProfileDto>.NotFound(null);
+                return Result<ProfileDto>.NotFound();
             }
 
             return Result<ProfileDto>.Success(_mapper.Map<ProfileDto>(result));
@@ -62,7 +62,7 @@ namespace AlibabaClone.Application.Services
             var result = await _personRepository.GetAllByCreatorIdAsync(accountId);
             if (result == null)
             {
-                return Result<List<PersonDto>>.NotFound(null);
+                return Result<List<PersonDto>>.NotFound();
             }
 
             return Result<List<PersonDto>>.Success(_mapper.Map<List<PersonDto>>(result));
@@ -73,7 +73,7 @@ namespace AlibabaClone.Application.Services
             var result = await _ticketOrderRepository.GetAllByBuyerIdAsync(accountId);
             if (result == null)
             {
-                return Result<List<TicketOrderSummaryDto>>.NotFound(null);
+                return Result<List<TicketOrderSummaryDto>>.NotFound();
             }
 
             return Result<List<TicketOrderSummaryDto>>.Success(_mapper.Map<List<TicketOrderSummaryDto>>(result));
@@ -84,7 +84,7 @@ namespace AlibabaClone.Application.Services
             var result = await _transactionRepository.GetTransactionsByAccountIdAsync(accountId);
             if (result == null)
             {
-                return Result<List<TransactionDto>>.NotFound(null);
+                return Result<List<TransactionDto>>.NotFound();
             }
 
             return Result<List<TransactionDto>>.Success(_mapper.Map<List<TransactionDto>>(result));
@@ -97,13 +97,13 @@ namespace AlibabaClone.Application.Services
             {
                 if (result.Count > 0 && result.First().TicketOrder.BuyerId != accoundId)
                 {
-                    return Result<List<TravellerTicketDto>>.Error(null, "Account unauthorized");
+                    return Result<List<TravellerTicketDto>>.Error("Account unauthorized");
                 }
 
                 return Result<List<TravellerTicketDto>>.Success(_mapper.Map<List<TravellerTicketDto>>(result));
             }
 
-            return Result<List<TravellerTicketDto>>.NotFound(null);
+            return Result<List<TravellerTicketDto>>.NotFound();
         }
 
         public async Task<Result<long>> UpsertBankAccountAsync(long accountId, UpsertBankAccountDto dto)
@@ -111,7 +111,7 @@ namespace AlibabaClone.Application.Services
             var error = ValidateBankInfo(dto);
             if (!string.IsNullOrEmpty(error))
             {
-                return Result<long>.Error(0, error);
+                return Result<long>.Error(error);
             }
 
             var bankAccount = await _bankAccountRepository.GetByAccountIdAsync(accountId);
@@ -159,7 +159,7 @@ namespace AlibabaClone.Application.Services
             var account = await _accountRepository.GetByIdAsync(accountId);
             if (account == null)
             {
-                return Result<long>.Error(0, "Account not found");
+                return Result<long>.Error("Account not found");
             }
 
             account.Deposit(dto.Amount);
@@ -175,12 +175,12 @@ namespace AlibabaClone.Application.Services
             var account = await _accountRepository.GetByIdAsync(accountId);
             if (account == null)
             {
-                return Result<long>.Error(0, "Account not found");
+                return Result<long>.Error("Account not found");
             }
 
             if (account.Balance < finalAmount)
             {
-                return Result<long>.Error(0, "Not enough money");
+                return Result<long>.Error("Not enough money");
             }
 
             account.Withdraw(finalAmount);
@@ -216,7 +216,7 @@ namespace AlibabaClone.Application.Services
             {
                 if (existingAccount.Id != accountId)
                 {
-                    return Result<long>.Error(account.Id, "This email is already in use");
+                    return Result<long>.Error("This email is already in use");
                 }
                 else
                 {
@@ -241,12 +241,12 @@ namespace AlibabaClone.Application.Services
             // check old-password's correction
             if (!PasswordHasher.VerifyPassword(oldPassword, account.Password))
             {
-                return Result<long>.Error(0, "Old password doesn't match");
+                return Result<long>.Error("Old password doesn't match");
             }
             // check validity of new password
             if (!IsPasswordStrong(newPassword))
             {
-                return Result<long>.Error(0, "New password is not valid");
+                return Result<long>.Error("New password is not valid");
             }
 
             account.Password = PasswordHasher.HashPassword(newPassword);

@@ -41,7 +41,7 @@ namespace AlibabaClone.Application.Services
                 person = await _personRepository.GetByIdAsync(account.PersonId.Value);
                 if (person == null)
                 {
-                    return Result<long>.Error(0, "No person found for this account");
+                    return Result<long>.Error("No person found for this account");
                 }
 
                 _mapper.Map(dto, person);
@@ -78,7 +78,7 @@ namespace AlibabaClone.Application.Services
             {
                 if (dto.Id > 0 && dto.Id != person.Id)
                 {
-                    return Result<long>.Error(0, "A person with this id number exists");
+                    return Result<long>.Error("A person with this id number exists");
                 }
                 _mapper.Map(dto, person);
                 person.CreatorId = accountId;

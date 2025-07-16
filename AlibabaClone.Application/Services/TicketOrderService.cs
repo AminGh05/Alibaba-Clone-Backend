@@ -51,14 +51,14 @@ namespace AlibabaClone.Application.Services
             var account = await _accountRepository.GetByIdAsync(accountId);
             if (account == null)
             {
-                return Result<long>.Error(0, "Account not found");
+                return Result<long>.Error("Account not found");
             }
 
             // get the transportation
             var transportation = await _transportationRepository.GetByIdAsync(dto.TransportationId);
             if (transportation == null)
             {
-                return Result<long>.Error(0, "Transportation not found");
+                return Result<long>.Error("Transportation not found");
             }
 
             // lock the transportation through reservation
@@ -67,13 +67,13 @@ namespace AlibabaClone.Application.Services
                 var baseAmount = transportation.BasePrice * dto.Travellers.Count;
                 if (account.Balance < baseAmount)
                 {
-                    return Result<long>.Error(0, "Not enough money");
+                    return Result<long>.Error("Not enough money");
                 }
                 // check validity of transportation
                 var checkSeats = ValidateTransportationAndSeats(transportation, dto.Travellers);
                 if (!string.IsNullOrEmpty(checkSeats))
                 {
-                    return Result<long>.Error(0, checkSeats);
+                    return Result<long>.Error(checkSeats);
                 }
 
                 var finalAmount = baseAmount;
@@ -94,7 +94,7 @@ namespace AlibabaClone.Application.Services
                 {
                     if (!traveller.SeatId.HasValue)
                     {
-                        return Result<long>.Error(0, "Seat ID is required for each traveller");
+                        return Result<long>.Error("Seat ID is required for each traveller");
                     }
 
                     Ticket ticket = new()

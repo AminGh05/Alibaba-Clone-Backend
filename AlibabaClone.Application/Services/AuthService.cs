@@ -43,7 +43,7 @@ namespace AlibabaClone.Application.Services
             // check phone and password to find account
             if (accountDto == null || !PasswordHasher.VerifyPassword(request.Password, accountDto.Password))
             {
-                return Result<AuthResponseDto>.Error(null, "Invalid phone number or password");
+                return Result<AuthResponseDto>.Error("Invalid phone number or password");
             }
 
             var response = new AuthResponseDto
@@ -61,12 +61,12 @@ namespace AlibabaClone.Application.Services
             var existing = await _accountRepository.GetByPhoneNumberAsync(request.PhoneNumber);
             if (existing != null)
             {
-                return Result<AuthResponseDto>.Error(null, "Phone Number already exists");
+                return Result<AuthResponseDto>.Error("Phone Number already exists");
             }
 
             if (!IsPasswordStrong(request.Password))
             {
-                return Result<AuthResponseDto>.Error(null, "Password should contain at least 8 chars including letters and numbers");
+                return Result<AuthResponseDto>.Error("Password should contain at least 8 chars including letters and numbers");
             }
 
             // create an account-dto and add it to database
