@@ -60,7 +60,8 @@ namespace AlibabaClone.Application.Services
                 fromCityId: requestDto.FromCityId,
                 toCityId: requestDto.ToCityId,
                 startDateTime: requestDto.StartDate,
-                endDateTime: requestDto.EndDate);
+                endDateTime: requestDto.EndDate,
+                remainingCapacity: requestDto.PassengerCount);
 
             if (result.Any())
             {

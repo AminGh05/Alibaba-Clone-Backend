@@ -12,7 +12,8 @@ namespace AlibabaClone.Infrastructure.Services.TransportationRepositories
 
 		}
 
-		public async Task<IEnumerable<Transportation>> SearchTransportationsAsync(short vehicleTypeId, int? fromCityId, int? toCityId, DateTime? startDateTime, DateTime? endDateTime)
+		public async Task<IEnumerable<Transportation>> SearchTransportationsAsync(short vehicleTypeId, int? fromCityId, int? toCityId, 
+			DateTime? startDateTime, DateTime? endDateTime, short remainingCapacity)
 		{
 			var query = DbSet
 				.Include(t => t.Vehicle)
@@ -26,8 +27,9 @@ namespace AlibabaClone.Infrastructure.Services.TransportationRepositories
 			query = query.Where(t => toCityId == null || t.ToLocation.CityId == toCityId.Value);
 			query = query.Where(t => startDateTime == null || t.StartDateTime.Date == startDateTime.Value.Date);
 			query = query.Where(t => endDateTime == null || t.EndDateTime.Date == endDateTime.Value.Date);
-
-			return await query.ToListAsync();
+			
+			var result = await query.ToListAsync();
+			return result.Where(t => t.RemainingCapacity >= remainingCapacity).ToList();
 		}
 	}
 }
