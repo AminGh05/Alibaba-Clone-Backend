@@ -392,6 +392,8 @@ I should specially thank:
 
 For their guidance, help and accompaniment
 
+---
+
 <div align="center">
   <strong>Built with ❤️ by AminGh05</strong>
   <br>
