@@ -11,5 +11,6 @@
 		public required DateTime StartDateTime { get; init; }
 		public DateTime? EndDateTime { get; init; }
 		public required decimal Price { get; init; }
-	}
+        public short RemainingCapacity { get; set; }
+    }
 }
