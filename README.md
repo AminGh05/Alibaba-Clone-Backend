@@ -26,7 +26,7 @@ A comprehensive backend API for an Alibaba.ir clone built with **ASP.NET Core** 
 - [Support](#support)
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
-- [Order of the Phoniex](#order-of-the-pheonix)
+- [Order of the Phoenix](#order-of-the-phoenix)
 
 ## Features
 
@@ -381,7 +381,7 @@ Special thanks to:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Order of the Pheonix
+## Order of the Phoenix
 
 All this idea and project is come from a group of friends. Team work, movement and learning as motivation and persistance could lead us to start a project which was a fascinating experience.
 
