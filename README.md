@@ -32,7 +32,7 @@ A comprehensive backend API for an Alibaba.ir clone built with **ASP.NET Core** 
 
 ### Core Functionalities
 
-- 🛍️ **Product Management**: Complete CRUD operations for transportations, users, companies and vehicles.
+- 🛍️ **Product Management**: Complete CRUD operations for transportations, users, companies, etc.
 - 👥 **User Management**: Authentication, authorization, and user profile management
 - 📦 **Order Processing**: Order creation, tracking, and fulfillment workflows
 - 🔍 **Advanced Search**: Search with filtering
@@ -177,7 +177,7 @@ curl -X POST "https://localhost:7131/api/auth/login" \
 
 ### Example API Calls
 
-#### Get Products
+#### Login
 
 ```bash
 curl -X GET "https://localhost:7131/api/transportations/search" \
@@ -373,7 +373,7 @@ Special thanks to:
 
 ### Inspiration
 
-- **Alibaba.com** - Original platform inspiration
+- **Alibaba.ir** - Original platform inspiration
 - **Clean Architecture Community** - Architecture patterns
 - **Microsoft Documentation** - Best practices and examples
 
