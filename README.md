@@ -382,14 +382,17 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 
 ## Order of the Phoenix
 
-All this idea and project is come from a group of friends. Team work, movement and learning as motivation and persistance could lead us to start a project which was a fascinating experience.
+This project is part of the first initiative by The Order of the Phoenix — a student-led movement aimed at building a culture of self-driven learning, teamwork, and meaningful project development. What started as a grassroots .NET learning group evolved into a full-stack travel management system inspired by platforms like Alibaba.ir, built with clean architecture on the backend and a modern React frontend.
+
+🔗 For more information, and to explore the full documentation and creation process, visit: [ASP.NET Project Documentation](https://theorderofphoenix.github.io/ASP.NET/)  
+
 
 I should specially thank:
 
-- [Mehrdad Shirvani](https://github.com/MehrdadShirvani/)
+- [Mehrdad Shirvani](https://github.com/MehrdadShirvani)
 - [Ali Taherzadeh](https://github.com/AliThz)
 
-For their guidance, help and accompaniment
+For their guidance, help and accompaniment.
 
 ---
 
