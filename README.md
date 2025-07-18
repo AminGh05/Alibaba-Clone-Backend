@@ -363,7 +363,6 @@ Special thanks to:
 
 - 🎯 **Clean Architecture** concepts by Robert C. Martin
 - 🏗️ **Domain-Driven Design** principles by Eric Evans
-- 🔄 **CQRS Pattern** implementation guidance from Microsoft
 - 📚 **ASP.NET Core Documentation** and community
 
 ### Third-Party Libraries
@@ -379,7 +378,7 @@ Special thanks to:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
 
 ## Order of the Phoenix
 
